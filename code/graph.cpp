@@ -56,15 +56,6 @@ std::vector<std::string> Graph::splice_ (string & line) {
     return vect;
 }
 
-
-//helper function that creates an edge from a vector generated from above function
-    /*
-    before caculating weight, gotta check if source and destination airports are both inserted 
-    to avoid inserting an element into the map by using [] operator
-        if an edge to the same destination is not found in the list of adjacent airports
-        the find function returns the key of the desired element or the end iterator if the element is not found
-        only inserts when the flight does not exist in the adjacency list of the airport
-    */
 Flight Graph::createEdge(std::vector<std::string> flightVector){
     int source = stoi(flightVector[3], nullptr);
     int dest = stoi(flightVector[5], nullptr);
