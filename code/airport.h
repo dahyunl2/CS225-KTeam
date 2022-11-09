@@ -5,6 +5,8 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <unordered_map>
+#include "Flight.h"
 
 using namespace std;
 
@@ -15,6 +17,7 @@ class Airport {
         Airport(string& line);
         Airport(vector<string> ap_vec);    
         Airport(int id, string name, string city, string country, double lat, double long);
+
         
         vector<string> tokenize(string const str, const char delimiter);
         void eraseSubStr(std::string& str);
@@ -25,6 +28,7 @@ class Airport {
         string getAPCountry();
         double getAPLat();
         double getAPLong();
+        unordered_map<int, Flight> destAPs;
 
     private:
         int ap_id;
