@@ -4,7 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include "Airport.h"
-#include "PageRank.h"
+#include "Flight.h"
 
 using namespace std;
 
@@ -40,5 +40,5 @@ class Graph {
         double convertRadian(double degree);
         
         //each graph object hosts a map of airports to its corresponding ID
-        unordered_map<int, Airport> vertices;
+        unordered_map<int, Airport> airportMap;
 };
