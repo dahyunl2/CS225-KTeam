@@ -5,8 +5,6 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include <unordered_map>
-#include "Flight.h"
 
 using namespace std;
 
