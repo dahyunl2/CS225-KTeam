@@ -110,8 +110,8 @@ Flight Graph::createEdge(std::vector<std::string> flightVector){
 
 
 void Graph::insertEdge(Flight flight){       
-    int source = flight.getSourceId();
-    int dest = flight.getDestId();
+    int source = flight.getfromWhereId();
+    int dest = flight.gettoWhereId();
 
     if (airportMap[source].destAPs.find(dest) == airportMap[source].destAPs.end())   
         (airportMap[source].destAPs)[dest] = f;

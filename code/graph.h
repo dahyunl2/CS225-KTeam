@@ -28,10 +28,7 @@ class Graph {
         //functions that return private maps for debugging
         unordered_map<int, Airport> getVertices();
         unordered_map<int, Flight> adjVertWithWeight(int airportID);
-        string getAPName(int ID);
         
-        // //function to harvest adjmatrix from a graph obj
-        // void adjMatrix(PageRank* pr_obj);
 
 
     private:
