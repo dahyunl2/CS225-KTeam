@@ -83,4 +83,3 @@ double Airport::getAPLongitude() {
     return ap_long;
 }
 
-

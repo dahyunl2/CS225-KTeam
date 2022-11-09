@@ -18,7 +18,8 @@ class Airport {
         Airport(vector<string> ap_vec);    
         Airport(int id, string name, string city, string country, double lat, double long);
         
-        // unordered_map<int, Flight> destAPs;
+        vector<string> tokenize(string const str, const char delimiter);
+        void eraseSubStr(std::string& str);
 
         int getAPID();
         string getAPName();
