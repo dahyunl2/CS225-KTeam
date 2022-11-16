@@ -1,3 +1,8 @@
 {
-    "vscode-corda.isCordaProject": false
+    "vscode-corda.isCordaProject": false,
+    "files.associations": {
+        "unordered_map": "cpp",
+        "queue": "cpp",
+        "vector": "cpp"
+    }
 }
