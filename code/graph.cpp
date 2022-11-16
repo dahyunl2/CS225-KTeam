@@ -32,6 +32,7 @@ void Graph::insertVertex(int id, Airport airport)
 {
     //vertices
     airportMap[id] = airport;
+    //hihi
 }
 
 
