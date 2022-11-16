@@ -16,3 +16,5 @@ all : $(EXENAME)
 $(EXENAME): $(OBJS)
 	$(LD) $(OBJS) $(LDFLAGS) -o $(EXENAME)
 
+clean:   
+   -rm -f *.o $(EXENAME)
