@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
     "vscode-corda.isCordaProject": false,
     "files.associations": {
@@ -5,4 +6,8 @@
         "queue": "cpp",
         "vector": "cpp"
     }
+=======
+{
+    "vscode-corda.isCordaProject": false
+>>>>>>> c6df826b12ef4e83c0181f75384c7e75d1247757
 }

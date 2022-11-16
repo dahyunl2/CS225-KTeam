@@ -51,7 +51,7 @@ void Graph::loadVertices(std::string & fileName)
             }
             if(cnt == 13){
                 Airport airport(currentL);
-                insertVertex(airport.getAPID(), airport);
+                insertVertex(airport.getAirportID(), airport);
             }
         }
         file.close(); 
@@ -114,7 +114,7 @@ void Graph::insertEdge(Flight flight){
     int dest = flight.gettoWhereId();
 
     if (airportMap[source].destAPs.find(dest) == airportMap[source].destAPs.end())   
-        (airportMap[source].destAPs)[dest] = flight;
+        (airportMap[source].destAPs)[dest] = f;
 }
 
 
