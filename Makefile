@@ -17,10 +17,10 @@ LDFLAGS = -std=c++14 -stdlib=libc++ -lc++abi -lm
 #       $(LD) $(OBJS) $(LDFLAGS) -o $(EXENAME)
 
 main: main.o code/graph.o code/Flight.o code/airport.o
-      $(CC) $(CFLAGS) -o main main.o code/graph.o code/Flight.o code/airport.o
+	$(CC) $(CFLAGS) -o main main.o code/graph.o code/Flight.o code/airport.o
 
 test: code/airport.cpp code/Flight.cpp code/graph.cpp
-      $(LD) code/graph.cpp code/airport.cpp code/Flight.cpp $(LDFLAGS) -o test
+	$(LD) code/graph.cpp code/airport.cpp code/Flight.cpp $(LDFLAGS) -o test
 
 # main.o: main.cpp graph.o Flight.o airport.o
 #    $(CC) $(CFLAGS) -c main.cpp
@@ -34,4 +34,4 @@ test: code/airport.cpp code/Flight.cpp code/graph.cpp
 # test: output_msg tests/tests.cpp graph.cpp Flight.cpp airport.cpp $(LDFLAGS) -o test
 
 clean:
-      -rm -f *.o $(EXENAME) test
+	-rm -f *.o $(EXENAME) test
