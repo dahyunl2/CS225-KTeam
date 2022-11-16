@@ -16,11 +16,10 @@ class Airport {
         Airport();
         Airport(string& line);
         Airport(vector<string> ap_vec);    
-        Airport(int id, string name, string city, string country, double lat, double long);
+        Airport(int id, string name, string city, string country, double latitude, double longitude);
 
         
-        vector<string> tokenize(string const str, const char delimiter);
-        void eraseSubStr(std::string& str);
+        vector<string> tokenize(string str, char delimiter);
 
         int getAPID();
         string getAPName();
