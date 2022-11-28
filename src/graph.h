@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
-#include "Airport.h"
+#include "airport.h"
 #include "Flight.h"
 
 using namespace std;
