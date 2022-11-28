@@ -1,7 +1,7 @@
 #pragma once
 #include "graph.h"
 #include "Flight.h"
-#include "airport.h"
+#include "Airport.h"
 
 #include <vector>
 #include <map>
