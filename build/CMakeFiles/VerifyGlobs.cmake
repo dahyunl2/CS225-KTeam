@@ -5,6 +5,7 @@ cmake_policy(SET CMP0009 NEW)
 # src_sources at src/CMakeLists.txt:5 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "/workspaces/cs225/225_project/CS225-KTeam/src/*.cpp")
 set(OLD_GLOB
+  "/workspaces/cs225/225_project/CS225-KTeam/src/BFS.cpp"
   "/workspaces/cs225/225_project/CS225-KTeam/src/Flight.cpp"
   "/workspaces/cs225/225_project/CS225-KTeam/src/airport.cpp"
   "/workspaces/cs225/225_project/CS225-KTeam/src/djikstras.cpp"

@@ -40,18 +40,78 @@ void eraseSubStr(std::string& str) {
     str.erase(str.size() - 1);
 }
 
+std::string TrimRight(const std::string & str) {
+    std::string tmp = str;
+    return tmp.erase(tmp.find_last_not_of(" ") + 1);
+}
+
+std::string TrimLeft(const std::string & str) {
+    std::string tmp = str;
+    return tmp.erase(0, tmp.find_first_not_of(" "));
+}
+
+std::string Trim(const std::string & str) {
+    std::string tmp = str;
+    return TrimLeft(TrimRight(str));
+}
+
+int SplitString(const std::string & str1, char sep, std::vector<std::string> &fields) {
+    std::string str = str1;
+    std::string::size_type pos;
+    while((pos=str.find(sep)) != std::string::npos) {
+        fields.push_back(str.substr(0,pos));
+        str.erase(0,pos+1);  
+    }
+    fields.push_back(str);
+    return fields.size();
+}
 //constructor with each line from airport data file
 // split using delimiter ',', store each data in vector, and assign the matching data to the variable
 Airport::Airport(string& line) {
-    vector<string> ap_vec = tokenize(line, ',');
- 
-    //change string to int/double if necessary
-    ap_id = stoi(ap_vec[0], nullptr);
-    ap_name = ap_vec[1].substr(1, ap_vec[1].size() - 2);
-    ap_city = ap_vec[2].substr(1, ap_vec[2].size() - 2);
-    ap_country = ap_vec[3].substr(1, ap_vec[3].size() - 2);
-    ap_lat = stod(ap_vec[6], nullptr);
-    ap_long = stod(ap_vec[7], nullptr);
+    // ifstream f(filename);
+    // string line;
+    // if (f.is_open()) {
+    //     while (getline(f, line)) {
+            vector<string> ap_vec;
+            unsigned s = SplitString(line, ',', ap_vec);
+            for (unsigned i = 0; i < s; i++) {
+                ap_vec[i] = Trim(ap_vec[i]);
+            }
+            // cout << " vec size:  " << ap_vec.size() << endl;
+
+            if (ap_vec.size() != 14) {
+                // for (string i: ap_vec)
+                    // std::cout << i <<  " ";
+                    cout << "x" << endl;
+            } else {
+                ap_id = stoi(ap_vec[0], nullptr);
+                ap_name = ap_vec[1].substr(1, ap_vec[1].size() - 2);
+                ap_city = ap_vec[2].substr(1, ap_vec[2].size() - 2);
+                ap_country = ap_vec[3].substr(1, ap_vec[3].size() - 2);
+                ap_lat = stod(ap_vec[6], nullptr);
+                ap_long = stod(ap_vec[7], nullptr);
+            }
+                
+            // try {
+            //     ap_lat = stod(ap_vec[6], nullptr);
+            // }
+            // catch(const std::exception& e) {
+            //     cout << ap_vec[6] << endl;
+            //     cout << e.what() << endl;
+            // };
+            
+            // try {ap_long = stod(ap_vec[7], nullptr);}
+            // catch(const std::exception& e) {
+            //     cout << ap_vec[7] << endl;
+            //     cout << e.what() << endl;
+            //     // break;
+            // }
+            //change string to int/double if necessary
+
+
+            // break;
+    //     }
+    // } 
 }
 
 
