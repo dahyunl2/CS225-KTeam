@@ -1,4 +1,7 @@
 src/CMakeFiles/src.dir/djikstras.cpp.o: \
+<<<<<<< HEAD
+  /workspaces/cs225/225_project/CS225-KTeam/src/djikstras.cpp
+=======
   /workspaces/cs225/225_project/CS225-KTeam/src/djikstras.cpp \
   /workspaces/cs225/225_project/CS225-KTeam/src/Djikstras.h \
   /workspaces/cs225/225_project/CS225-KTeam/src/graph.h \
@@ -253,3 +256,4 @@ src/CMakeFiles/src.dir/djikstras.cpp.o: \
   /usr/include/aarch64-linux-gnu/bits/uio_lim.h \
   /usr/bin/../lib/gcc/aarch64-linux-gnu/11/../../../../include/c++/11/stack \
   /usr/bin/../lib/gcc/aarch64-linux-gnu/11/../../../../include/c++/11/bits/stl_stack.h
+>>>>>>> origin/main
