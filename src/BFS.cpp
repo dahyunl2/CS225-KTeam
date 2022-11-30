@@ -62,7 +62,7 @@ vector<string> BFS::BFS_move(int sourceAP, int moves){
 
 
 vector<string> BFS::BFS_goal(int source, int dest){
-    vector<string> result = "";
+    vector<string> result = vector<string>();
     vector<bool> visited(14111, false);
     
     queue<int> queue;

@@ -60,9 +60,9 @@ void Graph::loadVertices(std::string & fileName)
 }
 
 string Graph::getAirportName(int ID){
-    auto it = vertices.find(ID);
-    if(it != vertices.end()){
-        return vertices[ID].getAirportName();
+    auto it = airportMap.find(ID);
+    if(it != airportMap.end()){
+        return airportMap[ID].getAPName();
     }
     return string();
 }
