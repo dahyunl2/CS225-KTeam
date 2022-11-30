@@ -12,3 +12,5 @@ TEST_CASE("Example", "[weight=10][part1]")
 	std::string str = "hello world";
     REQUIRE(str == "hello world");
 }
+
+

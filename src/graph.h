@@ -19,7 +19,7 @@ class Graph {
         void insertVertex(int v, Airport ap);
         void loadVertices(std::string & fileName);
         
-        //functions to create and insert edges
+        //functions to create insert edges
         vector<string> _lineToFlightContents(string & line);
         Flight createEdge(vector<string> flightVector);     
         void insertEdge(Flight f);

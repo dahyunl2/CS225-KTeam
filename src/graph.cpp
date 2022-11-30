@@ -151,3 +151,28 @@ void Graph::loadEdges(std::string & fileName){
     }
 }
 
+double Graph::calcWeight(int fromID, int toID){
+    //convert the latitude and longitude to radian
+    double lat1 = radianConvert(vertices[fromID].getAirportLatitude());
+    double lon1 = radianConvert(vertices[fromID].getAirportLongitude());
+    double lat2 = radianConvert(vertices[toID].getAirportLatitude());
+    double lon2 = radianConvert(vertices[toID].getAirportLongitude());
+
+    double lonDiff = lon2 - lon1;
+    double latDiff = lat2 - lat1;
+    
+    //using Haversine Formula, R is radious of earth in KM
+    long double ans = pow(sin(latDiff / 2), 2) +cos(lat1) * cos(lat2) * pow(sin(lonDiff / 2), 2);
+    ans = 2 * asin(sqrt(ans));
+    double R = 6371;
+    ans *= R;
+    return ans; 
+}
+
+
+//helper function to calcWeight ( M_PI is the constant of pi accurate to 1e-30
+double Graph::radianConvert(double degree)
+{
+    long double one_deg = (M_PI) / 180;
+    return (one_deg * degree);
+}
