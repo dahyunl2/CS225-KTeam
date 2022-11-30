@@ -17,29 +17,10 @@ Airport::Airport(int id, string name, string city, string country, double latitu
     : ap_id(id), ap_name(name), ap_city(city), 
     ap_country(country), ap_lat(latitude), ap_long(longitude) {}
 
-//helper function to split string in data file
-vector<string> tokenize(string str, char delimiter) {
-    vector<string> output;
-    string temp = "";
 
-    for (unsigned i = 0; i < str.size(); i++) {
-        if (str[i] == delimiter) {
-            output.push_back(temp);
-            temp = "";
-        } else {
-            temp += str[i];
-        }
-    }
-    output.push_back(temp);
-    return output;
-}
+ //helper functions for data parsing
 
-//erase first and last substring from the string
-void eraseSubStr(std::string& str) {
-    str.erase(0, 1);
-    str.erase(str.size() - 1);
-}
-
+ //erase whitespaces left and right side of string
 std::string TrimRight(const std::string & str) {
     std::string tmp = str;
     return tmp.erase(tmp.find_last_not_of(" ") + 1);
@@ -55,6 +36,7 @@ std::string Trim(const std::string & str) {
     return TrimLeft(TrimRight(str));
 }
 
+//split the line with the given separator and returns the number of sliced elements
 int SplitString(const std::string & str1, char sep, std::vector<std::string> &fields) {
     std::string str = str1;
     std::string::size_type pos;
@@ -65,29 +47,21 @@ int SplitString(const std::string & str1, char sep, std::vector<std::string> &fi
     fields.push_back(str);
     return fields.size();
 }
+
 //constructor with each line from airport data file
 // split using delimiter ',', store each data in vector, and assign the matching data to the variable
 Airport::Airport(string& line) {
-    // ifstream f(filename);
-    // string line;
-    // if (f.is_open()) {
-    //     while (getline(f, line)) {
             vector<string> ap_vec;
             unsigned s = SplitString(line, ',', ap_vec);
             for (unsigned i = 0; i < s; i++) {
                 ap_vec[i] = Trim(ap_vec[i]);
             }
-            // cout << " vec size:  " << ap_vec.size() << endl;
-
-            if (ap_vec.size() != 14) {
-                // for (string i: ap_vec)
-                    // std::cout << i <<  " ";
-                    cout << "x" << endl;
-            } else {
+            if (ap_vec.size() == 14) {
                 ap_id = stoi(ap_vec[0], nullptr);
                 ap_name = ap_vec[1].substr(1, ap_vec[1].size() - 2);
                 ap_city = ap_vec[2].substr(1, ap_vec[2].size() - 2);
                 ap_country = ap_vec[3].substr(1, ap_vec[3].size() - 2);
+                //change string to int/double if necessary
                 ap_lat = stod(ap_vec[6], nullptr);
                 ap_long = stod(ap_vec[7], nullptr);
             }
@@ -106,10 +80,6 @@ Airport::Airport(string& line) {
             //     cout << e.what() << endl;
             //     // break;
             // }
-            //change string to int/double if necessary
-
-
-            // break;
     //     }
     // } 
 }

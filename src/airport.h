@@ -18,7 +18,6 @@ class Airport {
         Airport(vector<string> ap_vec);    
         Airport(int id, string name, string city, string country, double latitude, double longitude);
 
-        vector<string> tokenize(string str, char delimiter);
 
         int getAPID();
         string getAPName();

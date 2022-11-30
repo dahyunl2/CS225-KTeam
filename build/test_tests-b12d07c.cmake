@@ -1,3 +1,5 @@
-add_test( Example /workspaces/cs225/225_project/CS225-KTeam/build/test Example  )
-set_tests_properties( Example PROPERTIES WORKING_DIRECTORY /workspaces/cs225/225_project/CS225-KTeam/build)
-set( test_TESTS Example)
+add_test( [==[Testing Airport constructor with vector]==] /workspaces/cs225/225_project/CS225-KTeam/build/test [==[Testing Airport constructor with vector]==]  )
+set_tests_properties( [==[Testing Airport constructor with vector]==] PROPERTIES WORKING_DIRECTORY /workspaces/cs225/225_project/CS225-KTeam/build)
+add_test( [==[Testing Airport constructor with string]==] /workspaces/cs225/225_project/CS225-KTeam/build/test [==[Testing Airport constructor with string]==]  )
+set_tests_properties( [==[Testing Airport constructor with string]==] PROPERTIES WORKING_DIRECTORY /workspaces/cs225/225_project/CS225-KTeam/build)
+set( test_TESTS [==[Testing Airport constructor with vector]==] [==[Testing Airport constructor with string]==])
