@@ -36,8 +36,6 @@ TEST_CASE("Testing Airport constructor with vector")
 }
 
 
-<<<<<<< HEAD
-=======
 TEST_CASE("Testing Airport constructor with string") { 
 
     cout<<"Testing string constructor with Mount Hagen Kagamuga Airport"<<endl;
@@ -58,4 +56,3 @@ TEST_CASE("Testing Airport constructor with string") {
     REQUIRE(-5 == Latitude);
     REQUIRE(144 == Longitude);
 }
->>>>>>> origin/main

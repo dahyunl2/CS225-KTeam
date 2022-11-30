@@ -96,14 +96,6 @@ std::vector<std::string> Graph::splice_ (string & line) {
 }
 
 
-//helper function that creates an edge from a vector generated from above function
-    /*
-    before caculating weight, gotta check if source and destination airports are both inserted 
-    to avoid inserting an element into the map by using [] operator
-        if an edge to the same destination is not found in the list of adjacent airports
-        the find function returns the key of the desired element or the end iterator if the element is not found
-        only inserts when the flight does not exist in the adjacency list of the airport
-    */
 Flight Graph::createEdge(std::vector<std::string> flightVector){
     int source = stoi(flightVector[3], nullptr);
     int dest = stoi(flightVector[5], nullptr);
@@ -151,8 +143,8 @@ void Graph::loadEdges(std::string & fileName){
     }
 }
 
+// Calculate Weight for Flight
 double Graph::calcWeight(int fromID, int toID){
-    //convert the latitude and longitude to radian
     double lat1 = radianConvert(vertices[fromID].getAirportLatitude());
     double lon1 = radianConvert(vertices[fromID].getAirportLongitude());
     double lat2 = radianConvert(vertices[toID].getAirportLatitude());
@@ -161,7 +153,6 @@ double Graph::calcWeight(int fromID, int toID){
     double lonDiff = lon2 - lon1;
     double latDiff = lat2 - lat1;
     
-    //using Haversine Formula, R is radious of earth in KM
     long double ans = pow(sin(latDiff / 2), 2) +cos(lat1) * cos(lat2) * pow(sin(lonDiff / 2), 2);
     ans = 2 * asin(sqrt(ans));
     double R = 6371;
