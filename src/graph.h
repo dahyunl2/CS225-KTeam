@@ -33,7 +33,7 @@ class Graph {
         std::vector<std::string> splice_ (string & line);
         std::string getAirportName(int id);
 
-        //TODP :: function to harvest adjmatrix from a graph obj
+        TODP :: function to harvest adjmatrix from a graph obj
 
     private:
         //functions that calculate the weight of an edge
