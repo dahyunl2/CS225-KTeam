@@ -59,6 +59,14 @@ void Graph::loadVertices(std::string & fileName)
     }
 }
 
+string Graph::getAirportName(int ID){
+    auto it = vertices.find(ID);
+    if(it != vertices.end()){
+        return vertices[ID].getAirportName();
+    }
+    return string();
+}
+
 std::vector<std::string> Graph::_lineToFlightContents(string & line){
 
     auto vect = splice_(line);
@@ -142,3 +150,4 @@ void Graph::loadEdges(std::string & fileName){
         file.close(); 
     }
 }
+

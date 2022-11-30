@@ -20,7 +20,7 @@ vector<string> BFS::BFS_All(int source){
 
     while (!queue.empty()) {
         current = queue.front();
-        result.push_back(airport_graph.getAPName(current));
+        result.push_back(airport_graph.getAirportName(current));
         
         for (auto it : airport_graph.adjVertWithWeight(current)){
             if (visited[it.first] != true) { 
@@ -47,7 +47,7 @@ vector<string> BFS::BFS_move(int sourceAP, int moves){
         if(result.size() == (unsigned)moves + 1)
             return result;
         currentAP = queue.front();
-        result.push_back(airport_graph.getAPName(currentAP));
+        result.push_back(airport_graph.getAirportName(currentAP));
         for (auto it : airport_graph.adjVertWithWeight(currentAP)){
             if (visited[it.first] == false) { 
                 queue.push(it.first);  
@@ -73,10 +73,10 @@ vector<string> BFS::BFS_goal(int source, int dest){
     while (!queue.empty()) {
         current = queue.front();
         if(current == dest){
-            result.push_back(airport_graph.getAPName(current));
+            result.push_back(airport_graph.getAirportName(current));
             break;
         }
-        result.push_back(airport_graph.getAPName(current));
+        result.push_back(airport_graph.getAirportName(current));
         for (auto it : airport_graph.adjVertWithWeight(current)){
             if (visited[it.first] == false) { 
                 queue.push(it.first);  

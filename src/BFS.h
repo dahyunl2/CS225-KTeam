@@ -1,5 +1,5 @@
 #pragma once
-#include "airport_graph.h"
+#include "graph.h"
 #include <string>
 #include <queue>
 #include <stack>
