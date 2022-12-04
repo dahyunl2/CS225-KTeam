@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include "airport.h"
 #include "Flight.h"
+#include "PageRank.h"
 
 using namespace std;
 
@@ -16,13 +17,13 @@ class Graph {
         Graph(string & airportFile, string & routesFile);
         
         //functions to insert vertices
-        void insertVertex(int v, Airport ap);
+        void loadVertex(int v, Airport ap);
         void loadVertices(std::string & fileName);
         
         //functions to create insert edges
         vector<string> _lineToFlightContents(string & line);
         Flight createEdge(vector<string> flightVector);     
-        void insertEdge(Flight f);
+        void loadEdge(Flight f);
         void loadEdges(std::string & fileName);
         
 
@@ -34,11 +35,11 @@ class Graph {
         std::string getAirportName(int id);
 
         // TODP :: function to harvest adjmatrix from a graph obj
-
+        void adjMatrix(PageRank *pr_obj);
     private:
         //functions that calculate the weight of an edge
-        double calcWeight(int fromID, int toID);
-        double convertRadian(double degree);
+        double calcWeight(int depID, int destID);
+        double degreeToRadian(double degree);
         
         //each graph object hosts a map of airports to its corresponding ID
         unordered_map<int, Airport> airportMap;

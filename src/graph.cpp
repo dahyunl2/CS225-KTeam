@@ -28,7 +28,7 @@ Graph::Graph(std::string & airportData, std::string & routesData){
 
 //construct the vertices
 //such that each airport object is connected with its ID
-void Graph::insertVertex(int id, Airport airport)
+void Graph::loadVertex(int id, Airport airport)
 {
     //vertices
     airportMap[id] = airport;
@@ -52,13 +52,14 @@ void Graph::loadVertices(std::string & fileName)
             }
             if(cnt == 13){
                 Airport airport(currentL);
-                insertVertex(airport.getAPID(), airport);
+                loadVertex(airport.getAPID(), airport);
             }
         }
         file.close(); 
     }
 }
 
+//
 string Graph::getAirportName(int ID){
     auto it = airportMap.find(ID);
     if(it != airportMap.end()){
@@ -110,7 +111,7 @@ Flight Graph::createEdge(std::vector<std::string> flightVector){
 }
 
 
-void Graph::insertEdge(Flight flight){       
+void Graph::loadEdge(Flight flight){       
     int source = flight.getfromWhereId();
     int dest = flight.gettoWhereId();
 
@@ -136,7 +137,7 @@ void Graph::loadEdges(std::string & fileName){
                 Flight f = createEdge(currVect);
                 Flight defaultF = Flight();
                 if(!(f == defaultF))
-                    insertEdge(f);
+                    loadEdge(f);
             }
         }
         file.close(); 
@@ -144,26 +145,81 @@ void Graph::loadEdges(std::string & fileName){
 }
 
 // Calculate Weight for Flight
-double Graph::calcWeight(int fromID, int toID){
-    double lat1 = radianConvert(vertices[fromID].getAirportLatitude());
-    double lon1 = radianConvert(vertices[fromID].getAirportLongitude());
-    double lat2 = radianConvert(vertices[toID].getAirportLatitude());
-    double lon2 = radianConvert(vertices[toID].getAirportLongitude());
+double Graph::calcWeight(int depID, int destID){
+    double lat1 = degreeToRadian(airportMap[depID].getAPLat());
+    double lon1 = degreeToRadian(airportMap[depID].getAPLat());
+    double lat2 = degreeToRadian(airportMap[destID].getAPLat());
+    double lon2 = degreeToRadian(airportMap[destID].getAPLat());
 
-    double lonDiff = lon2 - lon1;
-    double latDiff = lat2 - lat1;
+    double lan_diff = lon2 - lon1;
+    double lat_diff = lat2 - lat1;
     
-    long double ans = pow(sin(latDiff / 2), 2) +cos(lat1) * cos(lat2) * pow(sin(lonDiff / 2), 2);
-    ans = 2 * asin(sqrt(ans));
+    long double to_return = pow(sin(lat_diff / 2), 2) + cos(lat1) * cos(lat2) * pow(sin(lan_diff / 2), 2);
+    to_return = 2 * asin(sqrt(to_return));
     double R = 6371;
-    ans *= R;
-    return ans; 
+    to_return *= R;
+    return to_return; 
 }
 
 
 //helper function to calcWeight ( M_PI is the constant of pi accurate to 1e-30
-double Graph::radianConvert(double degree)
+double Graph::degreeToRadian(double degree)
 {
     long double one_deg = (M_PI) / 180;
     return (one_deg * degree);
 }
+
+//traversal graph to populate adj matrix for pagerank
+void Graph::adjMatrix(PageRank *pr_obj){
+
+    //determine and set the dimention
+    int size = airportMap.size();
+    pr_obj->adj.resize(size,vector<double>(size));
+    pr_obj->name_list.resize(size);
+    pr_obj->num = size;
+
+
+    //initialize obj matrix
+    for(int i = 0; i < size; i++){
+        for(int j = 0; j < size; j++){
+            pr_obj->adj[i][j] = 0.0;
+        }        
+    }
+
+    //populate the namelist of pagerank obj
+    int x = 0;
+    for(auto it = airportMap.begin(); it != airportMap.end(); ++it){
+        if(it->second.getAPID() == 0){
+            continue;
+        }
+        pr_obj->name_list[x] = (it->second.getAPID());
+        x++;     
+    }
+    
+
+    /*check every flight of every airport
+    put the weight into the adj matrix according to the order of the namelist*/
+    x = 0;
+    for(auto it = airportMap.begin(); it != airportMap.end(); ++it){
+        if(x == size) break;
+        if(it->second.getAPID() == 0){
+            continue;
+        }
+
+        /*
+        check the flights of the current vertices/airport
+            & find out the proper place for the weight of the current flight according to the namelist
+        */
+        for(auto flight = it->second.destAPs.begin(); flight != it->second.destAPs.end(); ++flight){
+            int y = 0;
+            for (auto temp = pr_obj->name_list.begin(); temp != pr_obj->name_list.end(); ++temp) {
+                if (*temp == flight->second.getDestId()) break;
+                y++;
+            } 
+            if(y == size) break;
+            pr_obj->adj[y][x] = flight->second.getWeight();
+        }
+        x++;
+    }
+}
+
