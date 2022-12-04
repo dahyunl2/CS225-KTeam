@@ -59,6 +59,10 @@ void Graph::loadVertices(std::string & fileName)
     }
 }
 
+unordered_map<int, Airport> Graph::getVertices(){
+    return airportMap;
+}
+
 //
 string Graph::getAirportName(int ID){
     auto it = airportMap.find(ID);
