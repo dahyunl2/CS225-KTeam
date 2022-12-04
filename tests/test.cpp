@@ -6,6 +6,7 @@
 #include "/workspaces/cs225/225_project/CS225-KTeam/src/airport.h"
 #include "/workspaces/cs225/225_project/CS225-KTeam/src/graph.h"
 #include "/workspaces/cs225/225_project/CS225-KTeam/src/BFS.h"
+#include "/workspaces/cs225/225_project/CS225-KTeam/src/PageRank.h"
 
 using std::string;
 using std::cout;

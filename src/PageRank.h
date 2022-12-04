@@ -9,7 +9,7 @@ class PageRank
 {
   public:
     //adjust adj matrix
-    void makeA(int num, double damping);
+    void make_adj(int num, double damping);
 
     //perform pagerank
     vector<double> rank(vector<double> initial, int time, bool normalize);

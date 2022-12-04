@@ -18,22 +18,33 @@ Graph::Graph(){
 
 }
 
-
-//constructor with loading airport.dat and routes.dat
-//creates vertices and edges
+/**
+*	Graph constructor - creates vertices and edges and initialize map
+*   @param airportData file path for airport data
+*   @param routesData file path for route data
+*	return:
+*/
 Graph::Graph(std::string & airportData, std::string & routesData){
     loadVertices(airportData);
     loadEdges(routesData);
 }
 
-//load individual airport to map with key value of airport id
+/**
+*	load individual airport to map with key value of airport id
+*	@param id ID of the inserting airport
+*   @param airport airport object
+*	return:
+*/
 void Graph::loadVertex(int id, Airport airport)
 {
     airportMap[id] = airport;
 }
 
 
-//load airport data and insert all airports into a map
+/**
+*	load airport data and insert all airports into a map
+*	@param fileName file path
+*/
 void Graph::loadVertices(std::string & fileName)
 {
     std::fstream file;
@@ -57,12 +68,20 @@ void Graph::loadVertices(std::string & fileName)
     }
 }
 
-//getter for airport map
+
+/**
+*	getter for airport map
+*	@return airportMap 
+*/
 unordered_map<int, Airport> Graph::getVertices(){
     return airportMap;
 }
 
-//get airport namee with ID
+/**
+*	get airport name with ID
+*	@param ID airport Id
+*	@return name of the airport
+*/
 string Graph::getAirportName(int ID){
     auto iter = airportMap.find(ID);
     if(iter == airportMap.end()){
@@ -71,22 +90,46 @@ string Graph::getAirportName(int ID){
     return airportMap[ID].getAPName();
 }
 
-// helper function for loading edges
+
+/**
+*	helper function for loading edges
+*	@param line a line of flight data
+*	@return string vector for contructing flight object
+*/
 std::vector<std::string> Graph::_lineToFlightContents(string & line){
 
     auto vect = splice_(line);
-    if (vect.size() != 9)
+    if (vect.size() != 8)
         return std::vector<std::string>();
 
     return vect;
 }
 
-// helper function for loading edges
+/**
+*	helper function for loading edges, parse a line to string vector
+*	@param line a line (string)
+*	@return string vector separated by ',' 
+*/
 std::vector<std::string> Graph::splice_ (string & line) {
     std::string currString = "";
     std::vector<std::string> vect;
+    int cnt = 0;
 
-     for(size_t i = 0; i < line.size(); ++i){
+    for (size_t i = 0; i < line.size(); ++i) {
+        char current = line[i];
+        if(current == '\\') {
+            return vect;
+        }
+        if (current == ',') {
+            cnt++;
+        }
+    }
+
+    if(cnt != 8) {
+        return vect;
+    }
+           
+    for(size_t i = 0; i < line.size(); ++i){
         char current = line[i];
         if(current == ',') {
             vect.push_back(currString);
@@ -95,12 +138,15 @@ std::vector<std::string> Graph::splice_ (string & line) {
         else
             currString += current;
     }
-
     return vect;
 }
 
 
-// creates flight (edge)
+/**
+*	creates flight object (edge)
+*	@param flightVector parsed line data (string vector)
+*	@return Flight object
+*/
 Flight Graph::createEdge(std::vector<std::string> flightVector){
     int source = stoi(flightVector[3], nullptr);
     int dest = stoi(flightVector[5], nullptr);
@@ -115,7 +161,10 @@ Flight Graph::createEdge(std::vector<std::string> flightVector){
 }
 
 
-// insert edge to map
+/**
+*	insert individual edge to map
+*	@param flight Flight object
+*/
 void Graph::loadEdge(Flight flight){       
     int source = flight.getfromWhereId();
     int dest = flight.gettoWhereId();
@@ -125,7 +174,10 @@ void Graph::loadEdge(Flight flight){
 }
 
 
-// load route file and insert all edges to airport map
+/**
+*	load route file and insert all edges to airport map
+*	@param fileName filepath of routes data
+*/
 void Graph::loadEdges(std::string & fileName){
     std::fstream file;
     file.open(fileName, ios::in);
@@ -146,7 +198,12 @@ void Graph::loadEdges(std::string & fileName){
     }
 }
 
-// calculate weight between two airports
+/**
+*	calculate weight between two airports
+*	@param depID id of departing airport (departure)
+*   @param destID id of arriving airport (destination)
+*   @return calculated weight (double)
+*/
 double Graph::calcWeight(int depID, int destID){
     double lat1 = degreeToRadian(airportMap[depID].getAPLat());
     double lon1 = degreeToRadian(airportMap[depID].getAPLat());
@@ -164,14 +221,22 @@ double Graph::calcWeight(int depID, int destID){
 }
 
 
-//helper function for calculating weight
+/**
+*	helper function for calculating weight
+*	@param degree angle in degree (double)
+*   @return angle in radian (double)
+*/
 double Graph::degreeToRadian(double degree)
 {
     long double one_deg = (M_PI) / 180;
     return (one_deg * degree);
 }
 
-//populate adj matrix in PageRank class to get the most important airport
+
+/**
+*	populate adj matrix in PageRank class to get the most important airport
+*	@param page_r pointer of PageRank object
+*/
 void Graph::adjMatrix(PageRank *page_r){
 
     //determine and set the dimention

@@ -5,8 +5,11 @@
 
 using namespace std;
 
-//constructor which operate the process of finding the shortest path between two airports
-//graph: graph of connected airports, AirportFrom: starting point, AirportTo: destination
+//Constructor which operate the process of finding the shortest path between airports 
+//and store that path to the member variable path -> getMinDist will return this path
+//input: graph;graph of connected airports, AirportFrom;starting point, AirportTo;destination
+//return: N/A 
+//helpers: mapsInitialize, findpaths
 Djikstras::Djikstras(Graph graph, string AirportFrom, string AirportTo) {
     vertices.clear();
     vector<string> v;  
@@ -36,6 +39,10 @@ Djikstras::Djikstras(Graph graph, string AirportFrom, string AirportTo) {
     std::reverse(vertices.begin(), vertices.end());
 }
 
+//helper for constructor
+//initializing three maps: distances, isvisited, prevNodes
+//input: v; vector made in constructor, Map; map made in constructor, AirportFrom;starting point, AirportTo;destination
+//return: N/A 
 void Djikstras::mapsInitialize(vector<string>& v, unordered_map<int, Airport> Map,string AirportFrom,string AirportTo){
     for (auto i = Map.begin(); i != Map.end(); ++i) {
         string name=i->second.getAPName();
@@ -53,6 +60,10 @@ void Djikstras::mapsInitialize(vector<string>& v, unordered_map<int, Airport> Ma
     }
 }
 
+//helper for constructor
+//finding paths between airports and update the distances with shortest path
+//input: Map; map made in constructor, AirportFrom;starting point, AirportTo;destination
+//return: N/A 
 void Djikstras::findPaths(unordered_map<int, Airport> Map,string AirportFrom,string AirportTo){
     while(AirportTo != myQueue.top().second) {
         pair<double, string> currNode = myQueue.top();
@@ -88,7 +99,9 @@ void Djikstras::findPaths(unordered_map<int, Airport> Map,string AirportFrom,str
     }
 }
 
-
+//finding all of the neighbors (adjacent) airpots of root airport
+//input: root; the name of a airport that we want to know the neighbors
+//return: vector of pairs<neighboring airport, the distance from this airport to the root>
 vector<pair<int, double>> Djikstras::getNeighbor(string root){
     vector<pair<int,double>> vertex_v;
     auto here = neighbor_list.find(root);
@@ -106,17 +119,21 @@ vector<pair<int, double>> Djikstras::getNeighbor(string root){
     }
 }
 
-//getter which return the distance between two airports
+//getter
+//return: path; the distance between two airports
 double Djikstras::getMinDist() const{
     return path;
 }
 
-//getter which return the vector includes all airports in the path
+//getter
+//return: vertices; the vector includes all airports in the path
 vector<string> Djikstras::getVertices() const{
     return vertices;
 }
 
 //check if the airport(node) is included in the neighbor_list
+//input: node; the name of the airport that we want to know if it is in the neighbor_list
+//return: boolean which indicates if the neighbor_list has node or not
 bool Djikstras::hasVertex(string node){
     if (neighbor_list.find(node) != neighbor_list.end()) {
         return true;
