@@ -12,9 +12,9 @@ using namespace std;
 class BFS {
     public:
         BFS(const string &airportFile, const string &routeFile);
-        vector<string> BFS_All(int source);
-        vector<string> BFS_move(int sourceAP, int moves);
-        vector<string> BFS_goal(int source, int dest);
+        vector<string> BFS_All(int source); /*call the source*/
+        vector<string> BFS_move(int sourceAP, int moves); /*where it moves based on the source*/
+        vector<string> BFS_goal(int source, int dest); /*destination*/
     
     private:
         Graph airport_graph;

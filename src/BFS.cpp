@@ -1,3 +1,6 @@
+/*create traversal to find the shortest routes between the airports with a given departing location 
+and arriving location based on the least amount of connecting flights*/
+
 #include "BFS.h"
 #include <climits>
 
@@ -22,7 +25,7 @@ vector<string> BFS::BFS_All(int source){
         current = queue.front();
         result.push_back(airport_graph.getAirportName(current));
         
-        for (auto it : airport_graph.adjVertWithWeight(current)){
+        for (auto it : airport_graph.getAdjAP(current)){
             if (visited[it.first] != true) { 
                 queue.push(it.first);  
                 visited[it.first] = true;
@@ -48,7 +51,7 @@ vector<string> BFS::BFS_move(int sourceAP, int moves){
             return result;
         currentAP = queue.front();
         result.push_back(airport_graph.getAirportName(currentAP));
-        for (auto it : airport_graph.adjVertWithWeight(currentAP)){
+        for (auto it : airport_graph.getAdjAP(currentAP)){
             if (visited[it.first] == false) { 
                 queue.push(it.first);  
                 visited[it.first] = true;
@@ -61,7 +64,7 @@ vector<string> BFS::BFS_move(int sourceAP, int moves){
 }
 
 
-vector<string> BFS::BFS_goal(int source, int dest){
+vector<string> BFS::BFS_goal(int dest, int source){
     vector<string> result = vector<string>();
     vector<bool> visited(14111, false);
     
@@ -77,15 +80,17 @@ vector<string> BFS::BFS_goal(int source, int dest){
             break;
         }
         result.push_back(airport_graph.getAirportName(current));
-        for (auto it : airport_graph.adjVertWithWeight(current)){
-            if (visited[it.first] == false) { 
+        for (auto it : airport_graph.getAdjAP(current)){
+            if (visited[it.first] != true) { 
                 queue.push(it.first);  
                 visited[it.first] = true;
             }
         }
         queue.pop();
     }
-    if(current != dest)
+    if(current != dest) {
+        cout << "There is no path from " << airport_graph.getAirportName(dest) << "to " << airport_graph.getAirportName(source) << endl;
         return vector<string> ();
+    }
     return result;
 }

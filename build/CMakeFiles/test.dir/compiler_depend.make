@@ -277,6 +277,7 @@ CMakeFiles/test.dir/tests/test.cpp.o: ../tests/test.cpp \
   /usr/include/c++/11/debug/safe_local_iterator.tcc \
   ../src/Flight.h \
   ../src/graph.h \
+  ../src/PageRank.h \
   ../src/BFS.h \
   /usr/include/c++/11/queue \
   /usr/include/c++/11/deque \
@@ -704,6 +705,8 @@ CMakeFiles/test.dir/tests/test.cpp.o: ../tests/test.cpp \
 /usr/include/x86_64-linux-gnu/bits/wordsize.h:
 
 /usr/include/c++/11/chrono:
+
+../src/PageRank.h:
 
 /usr/include/stdio.h:
 

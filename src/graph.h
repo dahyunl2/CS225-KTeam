@@ -26,6 +26,8 @@ class Graph {
         void loadEdge(Flight f);
         void loadEdges(std::string & fileName);
         
+        //function that returns maps of adjacent airports for a given airport id
+        unordered_map<int, Flight> getAdjAP(int airportID);
 
 
         //functions that return private maps for debugging

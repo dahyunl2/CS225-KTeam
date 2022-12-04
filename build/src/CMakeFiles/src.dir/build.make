@@ -97,10 +97,24 @@ src/CMakeFiles/src.dir/Flight.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/src.dir/Flight.cpp.s"
 	cd /workspaces/cs225/225_project/CS225-KTeam/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /workspaces/cs225/225_project/CS225-KTeam/src/Flight.cpp -o CMakeFiles/src.dir/Flight.cpp.s
 
+src/CMakeFiles/src.dir/PageRank.cpp.o: src/CMakeFiles/src.dir/flags.make
+src/CMakeFiles/src.dir/PageRank.cpp.o: ../src/PageRank.cpp
+src/CMakeFiles/src.dir/PageRank.cpp.o: src/CMakeFiles/src.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/workspaces/cs225/225_project/CS225-KTeam/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object src/CMakeFiles/src.dir/PageRank.cpp.o"
+	cd /workspaces/cs225/225_project/CS225-KTeam/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/src.dir/PageRank.cpp.o -MF CMakeFiles/src.dir/PageRank.cpp.o.d -o CMakeFiles/src.dir/PageRank.cpp.o -c /workspaces/cs225/225_project/CS225-KTeam/src/PageRank.cpp
+
+src/CMakeFiles/src.dir/PageRank.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/src.dir/PageRank.cpp.i"
+	cd /workspaces/cs225/225_project/CS225-KTeam/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /workspaces/cs225/225_project/CS225-KTeam/src/PageRank.cpp > CMakeFiles/src.dir/PageRank.cpp.i
+
+src/CMakeFiles/src.dir/PageRank.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/src.dir/PageRank.cpp.s"
+	cd /workspaces/cs225/225_project/CS225-KTeam/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /workspaces/cs225/225_project/CS225-KTeam/src/PageRank.cpp -o CMakeFiles/src.dir/PageRank.cpp.s
+
 src/CMakeFiles/src.dir/airport.cpp.o: src/CMakeFiles/src.dir/flags.make
 src/CMakeFiles/src.dir/airport.cpp.o: ../src/airport.cpp
 src/CMakeFiles/src.dir/airport.cpp.o: src/CMakeFiles/src.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/workspaces/cs225/225_project/CS225-KTeam/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object src/CMakeFiles/src.dir/airport.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/workspaces/cs225/225_project/CS225-KTeam/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object src/CMakeFiles/src.dir/airport.cpp.o"
 	cd /workspaces/cs225/225_project/CS225-KTeam/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/src.dir/airport.cpp.o -MF CMakeFiles/src.dir/airport.cpp.o.d -o CMakeFiles/src.dir/airport.cpp.o -c /workspaces/cs225/225_project/CS225-KTeam/src/airport.cpp
 
 src/CMakeFiles/src.dir/airport.cpp.i: cmake_force
@@ -114,7 +128,7 @@ src/CMakeFiles/src.dir/airport.cpp.s: cmake_force
 src/CMakeFiles/src.dir/djikstras.cpp.o: src/CMakeFiles/src.dir/flags.make
 src/CMakeFiles/src.dir/djikstras.cpp.o: ../src/djikstras.cpp
 src/CMakeFiles/src.dir/djikstras.cpp.o: src/CMakeFiles/src.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/workspaces/cs225/225_project/CS225-KTeam/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object src/CMakeFiles/src.dir/djikstras.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/workspaces/cs225/225_project/CS225-KTeam/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object src/CMakeFiles/src.dir/djikstras.cpp.o"
 	cd /workspaces/cs225/225_project/CS225-KTeam/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/src.dir/djikstras.cpp.o -MF CMakeFiles/src.dir/djikstras.cpp.o.d -o CMakeFiles/src.dir/djikstras.cpp.o -c /workspaces/cs225/225_project/CS225-KTeam/src/djikstras.cpp
 
 src/CMakeFiles/src.dir/djikstras.cpp.i: cmake_force
@@ -128,7 +142,7 @@ src/CMakeFiles/src.dir/djikstras.cpp.s: cmake_force
 src/CMakeFiles/src.dir/graph.cpp.o: src/CMakeFiles/src.dir/flags.make
 src/CMakeFiles/src.dir/graph.cpp.o: ../src/graph.cpp
 src/CMakeFiles/src.dir/graph.cpp.o: src/CMakeFiles/src.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/workspaces/cs225/225_project/CS225-KTeam/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object src/CMakeFiles/src.dir/graph.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/workspaces/cs225/225_project/CS225-KTeam/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object src/CMakeFiles/src.dir/graph.cpp.o"
 	cd /workspaces/cs225/225_project/CS225-KTeam/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/src.dir/graph.cpp.o -MF CMakeFiles/src.dir/graph.cpp.o.d -o CMakeFiles/src.dir/graph.cpp.o -c /workspaces/cs225/225_project/CS225-KTeam/src/graph.cpp
 
 src/CMakeFiles/src.dir/graph.cpp.i: cmake_force
@@ -143,6 +157,7 @@ src/CMakeFiles/src.dir/graph.cpp.s: cmake_force
 src_OBJECTS = \
 "CMakeFiles/src.dir/BFS.cpp.o" \
 "CMakeFiles/src.dir/Flight.cpp.o" \
+"CMakeFiles/src.dir/PageRank.cpp.o" \
 "CMakeFiles/src.dir/airport.cpp.o" \
 "CMakeFiles/src.dir/djikstras.cpp.o" \
 "CMakeFiles/src.dir/graph.cpp.o"
@@ -152,12 +167,13 @@ src_EXTERNAL_OBJECTS =
 
 src/libsrc.a: src/CMakeFiles/src.dir/BFS.cpp.o
 src/libsrc.a: src/CMakeFiles/src.dir/Flight.cpp.o
+src/libsrc.a: src/CMakeFiles/src.dir/PageRank.cpp.o
 src/libsrc.a: src/CMakeFiles/src.dir/airport.cpp.o
 src/libsrc.a: src/CMakeFiles/src.dir/djikstras.cpp.o
 src/libsrc.a: src/CMakeFiles/src.dir/graph.cpp.o
 src/libsrc.a: src/CMakeFiles/src.dir/build.make
 src/libsrc.a: src/CMakeFiles/src.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/workspaces/cs225/225_project/CS225-KTeam/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX static library libsrc.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/workspaces/cs225/225_project/CS225-KTeam/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX static library libsrc.a"
 	cd /workspaces/cs225/225_project/CS225-KTeam/build/src && $(CMAKE_COMMAND) -P CMakeFiles/src.dir/cmake_clean_target.cmake
 	cd /workspaces/cs225/225_project/CS225-KTeam/build/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/src.dir/link.txt --verbose=$(VERBOSE)
 

@@ -179,6 +179,30 @@ Flight.cpp.s:
 	cd /workspaces/cs225/225_project/CS225-KTeam/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/src.dir/build.make src/CMakeFiles/src.dir/Flight.cpp.s
 .PHONY : Flight.cpp.s
 
+PageRank.o: PageRank.cpp.o
+.PHONY : PageRank.o
+
+# target to build an object file
+PageRank.cpp.o:
+	cd /workspaces/cs225/225_project/CS225-KTeam/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/src.dir/build.make src/CMakeFiles/src.dir/PageRank.cpp.o
+.PHONY : PageRank.cpp.o
+
+PageRank.i: PageRank.cpp.i
+.PHONY : PageRank.i
+
+# target to preprocess a source file
+PageRank.cpp.i:
+	cd /workspaces/cs225/225_project/CS225-KTeam/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/src.dir/build.make src/CMakeFiles/src.dir/PageRank.cpp.i
+.PHONY : PageRank.cpp.i
+
+PageRank.s: PageRank.cpp.s
+.PHONY : PageRank.s
+
+# target to generate assembly for a file
+PageRank.cpp.s:
+	cd /workspaces/cs225/225_project/CS225-KTeam/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/src.dir/build.make src/CMakeFiles/src.dir/PageRank.cpp.s
+.PHONY : PageRank.cpp.s
+
 airport.o: airport.cpp.o
 .PHONY : airport.o
 
@@ -266,6 +290,9 @@ help:
 	@echo "... Flight.o"
 	@echo "... Flight.i"
 	@echo "... Flight.s"
+	@echo "... PageRank.o"
+	@echo "... PageRank.i"
+	@echo "... PageRank.s"
 	@echo "... airport.o"
 	@echo "... airport.i"
 	@echo "... airport.s"
