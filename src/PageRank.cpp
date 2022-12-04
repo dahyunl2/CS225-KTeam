@@ -4,6 +4,7 @@
 #include <numeric>
 #include <math.h>
 
+<<<<<<< HEAD
 /* 
 *	makeA(int num, double damping)
 *	Description: adjust adj matrix
@@ -13,6 +14,15 @@
 *	effect: modified adjmatrix according to damping factor, set num of the pagerank obj
 */
 void PageRank::makeA(int num, double damping) {
+=======
+
+/**
+*	modify adjmatrix according to damping factor, set num of the pagerank obj
+*	@param num dimention of matrix to be set and stored
+*   @param damping damping factor
+*/
+void PageRank::make_adj(int num, double damping) {
+>>>>>>> origin/main
     this->num = num;//store num
     //resize adj matrix
     //adj.resize(num,vector<double>(num));
@@ -39,6 +49,7 @@ void PageRank::makeA(int num, double damping) {
     }
 }
 
+<<<<<<< HEAD
 /* 
 *	rank(vector<double> initial, int time, bool normalize)
 *	Description: apply pagerank
@@ -46,6 +57,15 @@ void PageRank::makeA(int num, double damping) {
 *	       time -- time of iteration
 *	       normalize -- perform normalize when true
 *	return: the result vector
+=======
+
+/**
+*	execute pagerank algorithm 
+*	@param initial starting vector
+*   @param time time of iteration
+*   @param normalize whether to perform normalization or not
+*   @return the result vector
+>>>>>>> origin/main
 */
 vector<double> PageRank::rank(vector<double> initial, int time, bool normalize) {
     //vectors which stores the intermediate result
@@ -75,18 +95,31 @@ vector<double> PageRank::rank(vector<double> initial, int time, bool normalize) 
         }
         tmp = tmp2;
     
+<<<<<<< HEAD
     }
     //store result in the pagerank obj
+=======
+}
+>>>>>>> origin/main
     pr_output = tmp;
     return tmp;
 }
 
+<<<<<<< HEAD
 /* 
 *	top_N_airport(int num)
 *	Description: figure out the top num important airport
 *	input: num -- top NUM important airport
 *	return: the vector contains id of the top num important airport
 *	effect: print the id of the top num important airport
+=======
+
+
+/**
+*	return the top N most visited airport and print the id of the top N most visited airport
+*	@param num size of returning vector
+*   @return the vector contains id of the top num important airport
+>>>>>>> origin/main
 */
 vector<int> PageRank::top_N_airport(int num){
     vector<int> airport;
@@ -141,12 +174,20 @@ vector<int> PageRank::top_N_airport(int num){
     return airport;
 }
 
+<<<<<<< HEAD
 /* 
 *	initial_vector()
 *	Description: generate the starting vector
 *	input: 
 *	return: the starting vector for pagerank
 *	effect:
+=======
+
+
+/**
+*	generates the starting vector
+*   @return the starting vector for pagerank
+>>>>>>> origin/main
 */
 vector<double> PageRank::initial_vector(){
     vector<double> initial;
@@ -157,12 +198,17 @@ vector<double> PageRank::initial_vector(){
     return initial;
 }
 
+<<<<<<< HEAD
 /* 
 *	print_adjmatrix()
 *	Description: print the adj matrix
 *	input: 
 *	return: 
 *	effect: print the adj matrix. column and row are labeled
+=======
+/**
+*	print the adj matrix. column and row are labeled
+>>>>>>> origin/main
 */
 void PageRank::print_adj(){
     cout<<"adj matrix"<<endl;
@@ -185,10 +231,13 @@ void PageRank::print_adj(){
 }
 
 /* 
+<<<<<<< HEAD
 *	print_result()
 *	Description: print the result vector
 *	input: 
 *	return: 
+=======
+>>>>>>> origin/main
 *	effect: print the result vector. airport ids are also labeled
 */
 void PageRank::print_result(){
