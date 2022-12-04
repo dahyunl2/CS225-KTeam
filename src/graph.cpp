@@ -213,11 +213,11 @@ void Graph::adjMatrix(PageRank *pr_obj){
         for(auto flight = it->second.destAPs.begin(); flight != it->second.destAPs.end(); ++flight){
             int y = 0;
             for (auto temp = pr_obj->name_list.begin(); temp != pr_obj->name_list.end(); ++temp) {
-                if (*temp == flight->second.getDestId()) break;
+                if (*temp == flight->second.gettoWhereId()) break;
                 y++;
             } 
             if(y == size) break;
-            pr_obj->adj[y][x] = flight->second.getWeight();
+            pr_obj->adj[y][x] = flight->second.getDistance();
         }
         x++;
     }
