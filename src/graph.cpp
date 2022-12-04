@@ -28,7 +28,7 @@ Graph::Graph(std::string & airportData, std::string & routesData){
 
 //construct the vertices
 //such that each airport object is connected with its ID
-void Graph::insertVertex(int id, Airport airport)
+void Graph::loadVertex(int id, Airport airport)
 {
     //vertices
     airportMap[id] = airport;
@@ -52,13 +52,18 @@ void Graph::loadVertices(std::string & fileName)
             }
             if(cnt == 13){
                 Airport airport(currentL);
-                insertVertex(airport.getAPID(), airport);
+                loadVertex(airport.getAPID(), airport);
             }
         }
         file.close(); 
     }
 }
 
+unordered_map<int, Airport> Graph::getVertices(){
+    return airportMap;
+}
+
+//
 string Graph::getAirportName(int ID){
     auto it = airportMap.find(ID);
     if(it != airportMap.end()){
@@ -96,14 +101,6 @@ std::vector<std::string> Graph::splice_ (string & line) {
 }
 
 
-//helper function that creates an edge from a vector generated from above function
-    /*
-    before caculating weight, gotta check if source and destination airports are both inserted 
-    to avoid inserting an element into the map by using [] operator
-        if an edge to the same destination is not found in the list of adjacent airports
-        the find function returns the key of the desired element or the end iterator if the element is not found
-        only inserts when the flight does not exist in the adjacency list of the airport
-    */
 Flight Graph::createEdge(std::vector<std::string> flightVector){
     int source = stoi(flightVector[3], nullptr);
     int dest = stoi(flightVector[5], nullptr);
@@ -118,7 +115,7 @@ Flight Graph::createEdge(std::vector<std::string> flightVector){
 }
 
 
-void Graph::insertEdge(Flight flight){       
+void Graph::loadEdge(Flight flight){       
     int source = flight.getfromWhereId();
     int dest = flight.gettoWhereId();
 
@@ -144,10 +141,88 @@ void Graph::loadEdges(std::string & fileName){
                 Flight f = createEdge(currVect);
                 Flight defaultF = Flight();
                 if(!(f == defaultF))
-                    insertEdge(f);
+                    loadEdge(f);
             }
         }
         file.close(); 
     }
 }
 
+// Calculate Weight for Flight
+double Graph::calcWeight(int depID, int destID){
+    double lat1 = degreeToRadian(airportMap[depID].getAPLat());
+    double lon1 = degreeToRadian(airportMap[depID].getAPLat());
+    double lat2 = degreeToRadian(airportMap[destID].getAPLat());
+    double lon2 = degreeToRadian(airportMap[destID].getAPLat());
+
+    double lan_diff = lon2 - lon1;
+    double lat_diff = lat2 - lat1;
+    
+    long double to_return = pow(sin(lat_diff / 2), 2) + cos(lat1) * cos(lat2) * pow(sin(lan_diff / 2), 2);
+    to_return = 2 * asin(sqrt(to_return));
+    double R = 6371;
+    to_return *= R;
+    return to_return; 
+}
+
+
+//helper function to calcWeight ( M_PI is the constant of pi accurate to 1e-30
+double Graph::degreeToRadian(double degree)
+{
+    long double one_deg = (M_PI) / 180;
+    return (one_deg * degree);
+}
+
+//traversal graph to populate adj matrix for pagerank
+void Graph::adjMatrix(PageRank *pr_obj){
+
+    //determine and set the dimention
+    int size = airportMap.size();
+    pr_obj->adj.resize(size,vector<double>(size));
+    pr_obj->name_list.resize(size);
+    pr_obj->num = size;
+
+
+    //initialize obj matrix
+    for(int i = 0; i < size; i++){
+        for(int j = 0; j < size; j++){
+            pr_obj->adj[i][j] = 0.0;
+        }        
+    }
+
+    //populate the namelist of pagerank obj
+    int x = 0;
+    for(auto it = airportMap.begin(); it != airportMap.end(); ++it){
+        if(it->second.getAPID() == 0){
+            continue;
+        }
+        pr_obj->name_list[x] = (it->second.getAPID());
+        x++;     
+    }
+    
+
+    /*check every flight of every airport
+    put the weight into the adj matrix according to the order of the namelist*/
+    x = 0;
+    for(auto it = airportMap.begin(); it != airportMap.end(); ++it){
+        if(x == size) break;
+        if(it->second.getAPID() == 0){
+            continue;
+        }
+
+        /*
+        check the flights of the current vertices/airport
+            & find out the proper place for the weight of the current flight according to the namelist
+        */
+        for(auto flight = it->second.destAPs.begin(); flight != it->second.destAPs.end(); ++flight){
+            int y = 0;
+            for (auto temp = pr_obj->name_list.begin(); temp != pr_obj->name_list.end(); ++temp) {
+                if (*temp == flight->second.gettoWhereId()) break;
+                y++;
+            } 
+            if(y == size) break;
+            pr_obj->adj[y][x] = flight->second.getDistance();
+        }
+        x++;
+    }
+}

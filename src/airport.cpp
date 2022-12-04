@@ -51,36 +51,36 @@ int SplitString(const std::string & str1, char sep, std::vector<std::string> &fi
 //constructor with each line from airport data file
 // split using delimiter ',', store each data in vector, and assign the matching data to the variable
 Airport::Airport(string& line) {
-            vector<string> ap_vec;
-            unsigned s = SplitString(line, ',', ap_vec);
-            for (unsigned i = 0; i < s; i++) {
-                ap_vec[i] = Trim(ap_vec[i]);
-            }
-            if (ap_vec.size() == 14) {
-                ap_id = stoi(ap_vec[0], nullptr);
-                ap_name = ap_vec[1].substr(1, ap_vec[1].size() - 2);
-                ap_city = ap_vec[2].substr(1, ap_vec[2].size() - 2);
-                ap_country = ap_vec[3].substr(1, ap_vec[3].size() - 2);
-                //change string to int/double if necessary
-                ap_lat = stod(ap_vec[6], nullptr);
-                ap_long = stod(ap_vec[7], nullptr);
-            }
-                
-            // try {
-            //     ap_lat = stod(ap_vec[6], nullptr);
-            // }
-            // catch(const std::exception& e) {
-            //     cout << ap_vec[6] << endl;
-            //     cout << e.what() << endl;
-            // };
-            
-            // try {ap_long = stod(ap_vec[7], nullptr);}
-            // catch(const std::exception& e) {
-            //     cout << ap_vec[7] << endl;
-            //     cout << e.what() << endl;
-            //     // break;
-            // }
-    //     }
+    vector<string> ap_vec;
+    unsigned s = SplitString(line, ',', ap_vec);
+    for (unsigned i = 0; i < s; i++) {
+        ap_vec[i] = Trim(ap_vec[i]);
+    }
+    if (ap_vec.size() == 14) {
+        ap_id = stoi(ap_vec[0], nullptr);
+        ap_name = ap_vec[1].substr(1, ap_vec[1].size() - 2);
+        ap_city = ap_vec[2].substr(1, ap_vec[2].size() - 2);
+        ap_country = ap_vec[3].substr(1, ap_vec[3].size() - 2);
+        //change string to int/double if necessary
+        ap_lat = stod(ap_vec[6], nullptr);
+        ap_long = stod(ap_vec[7], nullptr);
+    }
+        
+    // try {
+    //     ap_lat = stod(ap_vec[6], nullptr);
+    // }
+    // catch(const std::exception& e) {
+    //     cout << ap_vec[6] << endl;
+    //     cout << e.what() << endl;
+    // };
+    
+    // try {ap_long = stod(ap_vec[7], nullptr);}
+    // catch(const std::exception& e) {
+    //     cout << ap_vec[7] << endl;
+    //     cout << e.what() << endl;
+    //     // break;
+    // }
+//     }
     // } 
 }
 
@@ -96,7 +96,7 @@ Airport::Airport(vector<string> ap_vec){
 }
 
 
-//getter for each variable
+//getter for each members
 int Airport::getAPID() {
     return ap_id;
 }
