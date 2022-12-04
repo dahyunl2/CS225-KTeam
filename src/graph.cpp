@@ -26,32 +26,30 @@ Graph::Graph(std::string & airportData, std::string & routesData){
     loadEdges(routesData);
 }
 
-//construct the vertices
-//such that each airport object is connected with its ID
+//load individual airport to map with key value of airport id
 void Graph::loadVertex(int id, Airport airport)
 {
-    //vertices
     airportMap[id] = airport;
-    //hihi
 }
 
 
-//takes airport.dat and insert each airport into the class line by line
+//load airport data and insert all airports into a map
 void Graph::loadVertices(std::string & fileName)
 {
     std::fstream file;
     file.open(fileName, ios::in);
+    const int max_count = 13;
     if (file.is_open()){   
-        std::string currentL;
-        while(getline(file, currentL)){
-            int cnt = 0;
-            for(unsigned i = 0; i < currentL.size(); ++i){
-                char here = currentL[i];
+        std::string cur_line;
+        while(getline(file, cur_line)){
+            int count = 0;
+            for(unsigned i = 0; i < cur_line.size(); ++i){
+                char here = cur_line[i];
                 if(here == ',')
-                    cnt++;
+                    count++;
             }
-            if(cnt == 13){
-                Airport airport(currentL);
+            if(count == max_count){
+                Airport airport(cur_line);
                 loadVertex(airport.getAPID(), airport);
             }
         }
@@ -59,30 +57,31 @@ void Graph::loadVertices(std::string & fileName)
     }
 }
 
+//getter for airport map
 unordered_map<int, Airport> Graph::getVertices(){
     return airportMap;
 }
 
-//
+//get airport namee with ID
 string Graph::getAirportName(int ID){
-    auto it = airportMap.find(ID);
-    if(it != airportMap.end()){
-        return airportMap[ID].getAPName();
+    auto iter = airportMap.find(ID);
+    if(iter == airportMap.end()){
+        return string();    
     }
-    return string();
+    return airportMap[ID].getAPName();
 }
 
+// helper function for loading edges
 std::vector<std::string> Graph::_lineToFlightContents(string & line){
 
     auto vect = splice_(line);
     if (vect.size() != 9)
         return std::vector<std::string>();
 
-
     return vect;
 }
 
-
+// helper function for loading edges
 std::vector<std::string> Graph::splice_ (string & line) {
     std::string currString = "";
     std::vector<std::string> vect;
@@ -101,6 +100,7 @@ std::vector<std::string> Graph::splice_ (string & line) {
 }
 
 
+// creates flight (edge)
 Flight Graph::createEdge(std::vector<std::string> flightVector){
     int source = stoi(flightVector[3], nullptr);
     int dest = stoi(flightVector[5], nullptr);
@@ -110,11 +110,12 @@ Flight Graph::createEdge(std::vector<std::string> flightVector){
         double weight = calcWeight(source, dest);
         return Flight(source, dest, weight);
     }
-    //if either airport is not inserted, return default constructed flight
+    
     return Flight();
 }
 
 
+// insert edge to map
 void Graph::loadEdge(Flight flight){       
     int source = flight.getfromWhereId();
     int dest = flight.gettoWhereId();
@@ -124,16 +125,13 @@ void Graph::loadEdge(Flight flight){
 }
 
 
-//similar to insert all vertices
-//iterates through routes.dat and insert flight for each line 
+// load route file and insert all edges to airport map
 void Graph::loadEdges(std::string & fileName){
     std::fstream file;
-    //open the file
     file.open(fileName, ios::in);
     if (file.is_open()){   
         std::string currLine;
-                    
-        //iterate through each line of the file
+
         while(getline(file, currLine)){ 
             std::vector<std::string> currVect = _lineToFlightContents(currLine);
             
@@ -148,7 +146,7 @@ void Graph::loadEdges(std::string & fileName){
     }
 }
 
-// Calculate Weight for Flight
+// calculate weight between two airports
 double Graph::calcWeight(int depID, int destID){
     double lat1 = degreeToRadian(airportMap[depID].getAPLat());
     double lon1 = degreeToRadian(airportMap[depID].getAPLat());
@@ -166,27 +164,27 @@ double Graph::calcWeight(int depID, int destID){
 }
 
 
-//helper function to calcWeight ( M_PI is the constant of pi accurate to 1e-30
+//helper function for calculating weight
 double Graph::degreeToRadian(double degree)
 {
     long double one_deg = (M_PI) / 180;
     return (one_deg * degree);
 }
 
-//traversal graph to populate adj matrix for pagerank
-void Graph::adjMatrix(PageRank *pr_obj){
+//populate adj matrix in PageRank class to get the most important airport
+void Graph::adjMatrix(PageRank *page_r){
 
     //determine and set the dimention
     int size = airportMap.size();
-    pr_obj->adj.resize(size,vector<double>(size));
-    pr_obj->name_list.resize(size);
-    pr_obj->num = size;
+    page_r->adj.resize(size,vector<double>(size));
+    page_r->name_list.resize(size);
+    page_r->num = size;
 
 
     //initialize obj matrix
     for(int i = 0; i < size; i++){
         for(int j = 0; j < size; j++){
-            pr_obj->adj[i][j] = 0.0;
+            page_r->adj[i][j] = 0.0;
         }        
     }
 
@@ -196,7 +194,7 @@ void Graph::adjMatrix(PageRank *pr_obj){
         if(it->second.getAPID() == 0){
             continue;
         }
-        pr_obj->name_list[x] = (it->second.getAPID());
+        page_r->name_list[x] = (it->second.getAPID());
         x++;     
     }
     
@@ -216,12 +214,12 @@ void Graph::adjMatrix(PageRank *pr_obj){
         */
         for(auto flight = it->second.destAPs.begin(); flight != it->second.destAPs.end(); ++flight){
             int y = 0;
-            for (auto temp = pr_obj->name_list.begin(); temp != pr_obj->name_list.end(); ++temp) {
+            for (auto temp = page_r->name_list.begin(); temp != page_r->name_list.end(); ++temp) {
                 if (*temp == flight->second.gettoWhereId()) break;
                 y++;
             } 
             if(y == size) break;
-            pr_obj->adj[y][x] = flight->second.getDistance();
+            page_r->adj[y][x] = flight->second.getDistance();
         }
         x++;
     }

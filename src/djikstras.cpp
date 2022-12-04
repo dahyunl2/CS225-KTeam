@@ -12,7 +12,31 @@ Djikstras::Djikstras(Graph graph, string AirportFrom, string AirportTo) {
     vector<string> v;  
 
     unordered_map<int, Airport> Map = graph.getVertices();
+    mapsInitialize(v, Map, AirportFrom, AirportTo);
+    
+    pair<double,string> start = make_pair(0.0, AirportFrom);
+    myQueue.push(start);
 
+    for(auto it = Map.begin(); it != Map.end(); ++it) {
+        pair<string, unordered_map<int, Flight>> p=make_pair(it->second.getAPName(), it->second.destAPs);
+        neighbor_list.insert(p);
+    }
+
+    findPaths(Map,AirportFrom, AirportTo);
+
+    //min dist
+    path = distances[AirportTo];
+
+    string key = AirportTo;
+    vertices.push_back(AirportTo);
+    while(key != AirportFrom) {
+        vertices.push_back(prevNodes[key]);
+        key = prevNodes[key];
+    }
+    std::reverse(vertices.begin(), vertices.end());
+}
+
+void Djikstras::mapsInitialize(vector<string>& v, unordered_map<int, Airport> Map,string AirportFrom,string AirportTo){
     for (auto i = Map.begin(); i != Map.end(); ++i) {
         string name=i->second.getAPName();
         v.push_back(name);
@@ -27,11 +51,43 @@ Djikstras::Djikstras(Graph graph, string AirportFrom, string AirportTo) {
             isVisited.insert(make_pair(name, false));
         }
     }
-    pair<double,string> init = make_pair(0.0, AirportFrom);
-    myQueue.push(init);
-
-    //Not yet completed, need to add more
 }
+
+void Djikstras::findPaths(unordered_map<int, Airport> Map,string AirportFrom,string AirportTo){
+    while(AirportTo != myQueue.top().second) {
+        pair<double, string> currNode = myQueue.top();
+        myQueue.pop();
+
+        vector<pair<string, double>> neighborNames;
+        vector<pair<int , double>> neighbors = getNeighbor(currNode.second);
+        
+        //set neighborNames using neighbors
+        for (size_t i=0;i<neighbors.size();i++) {
+            auto temp=neighbors[i];
+            for (auto j = Map.begin(); j != Map.end(); ++j) {
+                if (temp.first == j->first) {
+                    pair<string, double> temp2=make_pair(j->second.getAPName(), temp.second);
+                    neighborNames.push_back(temp2);
+                }
+            }
+        }
+
+        //change distances using myQueue
+        for (size_t i=0;i<neighborNames.size();i++) {
+            auto temp=neighborNames[i];
+            if (isVisited[currNode.second] == false && isVisited[temp.first] == false) {
+                double dist = temp.second;
+                if(dist + distances[currNode.second] < distances[temp.first]) {
+                    prevNodes[temp.first] = currNode.second;
+                    distances[temp.first] = dist + distances[currNode.second];
+                    myQueue.push(make_pair(distances[temp.first], temp.first)); 
+                }
+            }
+        }
+        isVisited[currNode.second] = true;
+    }
+}
+
 
 vector<pair<int, double>> Djikstras::getNeighbor(string root){
     vector<pair<int,double>> vertex_v;

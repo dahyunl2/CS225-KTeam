@@ -75,10 +75,9 @@ vector<double> PageRank::rank(vector<double> initial, int time, bool normalize) 
         }
         tmp = tmp2;
     
-    //store result in the pagerank obj
+}
     pr_output = tmp;
     return tmp;
-}
 }
 
 /* 

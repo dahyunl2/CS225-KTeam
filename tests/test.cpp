@@ -14,7 +14,7 @@ using std::endl;
 using namespace std;
 
 
-TEST_CASE("Testing Airport constructor with vector")
+TEST_CASE("Testing Airport constructor 1")
 {
     unordered_map<string, Airport> vertices;
     cout<<"Testing vector constructor with Southend airport"<<endl;
@@ -36,7 +36,7 @@ TEST_CASE("Testing Airport constructor with vector")
 }
 
 
-TEST_CASE("Testing Airport constructor with string") { 
+TEST_CASE("Testing Airport constructor 2") { 
 
     cout<<"Testing string constructor with Mount Hagen Kagamuga Airport"<<endl;
     unordered_map<string, Airport> vertices;
@@ -56,3 +56,37 @@ TEST_CASE("Testing Airport constructor with string") {
     REQUIRE(-5 == Latitude);
     REQUIRE(144 == Longitude);
 }
+
+TEST_CASE("Testing Graph constructor") {
+    string aData = "/workspaces/cs225/225_project/CS225-KTeam/data/airports.dat";
+    string rData = "/workspaces/cs225/225_project/CS225-KTeam/data/routes.dat";
+
+    Graph aGraph = Graph(aData, rData);
+    unordered_map<int, Airport> aMap = aGraph.getVertices();
+
+    // Airport ID of Incheon International Airport and Yangyang International Airport
+    int ICN = 3930;
+    int YY = 6006;
+
+    cout << "Adjacent airports and the corresponding flights of international airports in Korea" << endl;
+    for (auto it = aMap.begin(); it != aMap.end(); ++it) {
+        if (it->first == ICN || it->first == YY) {
+            
+            int id = it->first;
+            cout << "Flight departing from " << it->second.getAPID() << ", ";
+            cout << it->second.getAPName() << ", ";
+            cout << it->second.getAPCity() << endl;
+
+            unordered_map<int, Flight> dest_APs = it->second.destAPs;
+            
+            cout << "dest AP size: " << dest_APs.size() << endl;
+            for (auto it = dest_APs.begin(); it != dest_APs.end(); ++it) {
+                REQUIRE(it->second.getfromWhereId() == id);
+                cout << "Flight departing from " << it->second.getfromWhereId() << endl;
+                cout << "Flight arriving at " << it->second.gettoWhereId() << endl;
+                cout << "Flight distance: " << it->second.getDistance() << endl;
+            }
+        }
+    }
+}
+

@@ -25,6 +25,9 @@ class Djikstras {
         //checks whether the vertex of the node exists 
         bool hasVertex(string node);
 
+        //helpers
+        void mapsInitialize(vector<string>& v, unordered_map<int, Airport> Map, string AirportFrom,string AirportTo);
+        void findPaths(unordered_map<int, Airport> Map,string AirportFrom,string AirportTo);
     private:
         double path;
         map<string, double> distances;
