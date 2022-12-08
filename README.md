@@ -5,3 +5,5 @@ Chang Hun Park (chp2),
 Fiona Seo (seungyi3),
 Dawn Lim (dahyunl2),
 Chae Hoon Kim (chk2),
+
+setting directory : /workspaces/cs225/225_project/CS225-KTeam/build

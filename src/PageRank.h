@@ -9,11 +9,8 @@ class PageRank
 {
   public:
     //adjust adj matrix
-<<<<<<< HEAD
-    void makeA(int num, double damping);
-=======
+
     void make_adj(int num, double damping);
->>>>>>> origin/main
 
     //perform pagerank
     vector<double> rank(vector<double> initial, int time, bool normalize);
@@ -30,7 +27,7 @@ class PageRank
     //print the result vector
     void print_result();
 
-    //the adj matrix variable, for pagerank
+    //the adj matrix variable for pagerank
     vector<vector<double>> adj; 
 
     //the namelist of the airport. contains the airport id

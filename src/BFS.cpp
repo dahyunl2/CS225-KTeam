@@ -80,11 +80,7 @@ vector<string> BFS::BFS_goal(int dest, int source){
             break;
         }
         result.push_back(airport_graph.getAirportName(current));
-<<<<<<< HEAD
-        for (auto it : airport_graph.getAdjAP(current)){
-=======
         for (auto it : airport_graph.adjVertWithWeight(current)){
->>>>>>> origin/main
             if (visited[it.first] != true) { 
                 queue.push(it.first);  
                 visited[it.first] = true;
