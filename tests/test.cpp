@@ -140,21 +140,22 @@ TEST_CASE("Testing Pagerank implementation on a subset of the whole data set") {
     auto airportMap = airportGraph.getVertices();
 
     //printing out all flights departing from O'Hare, Newark and Beijing airport
-    for(auto it = airportMap.begin(); it != airportMap.end(); ++it){
-        cout << "Airport ID: " << it->first <<endl;
-        if(it->first == 3830 || it->first == 3494 || it->first == 3364){
-            cout << "Airport ID: " <<it->second.getAPID() << " ";
-            cout << "Airport Name: " <<it->second.getAPName() << endl;
+    // for(auto it = airportMap.begin(); it != airportMap.end(); ++it){
+    //     cout << "Airport ID: " << it->first <<endl;
+    //     if(it->first == 3830 || it->first == 3494 || it->first == 3364){
+    //         cout << "Airport ID: " <<it->second.getAPID() << " ";
+    //         cout << "Airport Name: " <<it->second.getAPName() << endl;
 
-            unordered_map<int, Flight> adjList = it->second.destAPs;
-            for(auto it = adjList.begin(); it != adjList.end(); ++it){
-                cout << "Source ID: " << it->second.getfromWhereId() << " ";
-                cout << "Destination ID: " << it->second.gettoWhereId() << " ";
-                cout << "Flight weight: " << it->second.getDistance() << endl;
-            }
-        }
-    }
-    cout << "\n";
+    //         unordered_map<int, Flight> adjList = it->second.destAPs;
+    //         for(auto it = adjList.begin(); it != adjList.end(); ++it){
+    //             cout << "Source ID: " << it->second.getfromWhereId() << " ";
+    //             cout << "Destination ID: " << it->second.gettoWhereId() << " ";
+    //             cout << "Flight weight: " << it->second.getDistance() << endl;
+    //         }
+    //     }
+    // }
+    //cout << "\n";
+
     PageRank *page = new PageRank();
     airportGraph.adjMatrix(page);
     page->make_adj(page->num, 0.85);
@@ -164,7 +165,6 @@ TEST_CASE("Testing Pagerank implementation on a subset of the whole data set") {
     page->print_result();
     vector<int> id_rank = page->top_N_airport(3);
 
-    cout << id_rank[0] << endl;
     REQUIRE(3364 == id_rank[0]);
     REQUIRE(3728 == id_rank[1]);
 }
