@@ -17,6 +17,7 @@ using namespace std;
 
 TEST_CASE("Testing Airport constructor 1")
 {
+    //Testing Airport Constructor: vector<string> input
     unordered_map<string, Airport> vertices;
     cout<<"Testing vector constructor with Southend airport"<<endl;
     vector<string> airport_data = {"508","Southend Airport","Southend","United Kingdom", "", "", "51.5713996887207", "0.6955559849739075"};
@@ -27,7 +28,7 @@ TEST_CASE("Testing Airport constructor 1")
     string Country = vertices["Southend Airport"].getAPCountry();
     int Latitude = (int)vertices["Southend Airport"].getAPLat();
     int Longitude = (int)vertices["Southend Airport"].getAPLong();
-
+    //Compare the results with the expected results.
     REQUIRE(508 == ID);
     REQUIRE("Southend Airport" == Name);
     REQUIRE("Southend" == City);
@@ -39,6 +40,7 @@ TEST_CASE("Testing Airport constructor 1")
 
 TEST_CASE("Testing Airport constructor 2") { 
 
+    //Testing Airport Constructor: string input
     cout<<"Testing string constructor with Mount Hagen Kagamuga Airport"<<endl;
     unordered_map<string, Airport> vertices;
     string mount_hagen = "1,\"Mount Hagen Kagamuga Airport\",\"Mount Hagen\",\"Papua New Guinea\",\"HGU\",\"AYMH\",-5.826789855957031,144.29600524902344,5388,10,\"U\",\"Pacific/Port_Moresby\",\"airport\",\"OurAirports\"";
@@ -49,7 +51,7 @@ TEST_CASE("Testing Airport constructor 2") {
     string Country = (vertices["Mount Hagen Kagamuga Airport"].getAPCountry());
     int Latitude = (int)vertices["Mount Hagen Kagamuga Airport"].getAPLat();
     int Longitude = (int)vertices["Mount Hagen Kagamuga Airport"].getAPLong();
-    
+    //Compare the results with the expected results
     REQUIRE(1 == ID);
     REQUIRE("Mount Hagen Kagamuga Airport" == Name);
     REQUIRE("Mount Hagen" == City);
@@ -119,7 +121,7 @@ TEST_CASE("Testing constructing graph from a subset of data and execute pagerank
 
     PageRank *page = new PageRank();
     airportGraph.adjMatrix(page);
-    page->make_adj(page->dim, 0.85);
+    page->make_adj(page->dim, 0.9);
     vector<double> initial = page->initial_vector();
     page->rank(initial, 150, true);
     vector<int> id_rank = page->top_N_airport(2);
