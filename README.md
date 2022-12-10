@@ -34,5 +34,9 @@ tests folder:
 This folder is for testing the algorithms. Our test cases are in test.cpp and the data made for each test case are stored in this folder.
  
 # Running Instruction:
+<img width="704" alt="Screen Shot 2022-12-10 at 5 34 40 PM" src="https://user-images.githubusercontent.com/90300666/206879558-6a757d09-9d9d-430b-9142-c4552defcb9d.png">
 
+<img width="706" alt="Screen Shot 2022-12-10 at 5 35 01 PM" src="https://user-images.githubusercontent.com/90300666/206879562-324d7be2-6e99-4893-af52-e720c1f92616.png">
 
+<img width="709" alt="Screen Shot 2022-12-10 at 5 35 07 PM" src="https://user-images.githubusercontent.com/90300666/206879565-cb1c430a-cb0a-47ed-8fea-74937e630a48.png">
+<img width="725" alt="Screen Shot 2022-12-10 at 5 35 16 PM" src="https://user-images.githubusercontent.com/90300666/206879568-d4d05d25-00ee-45f1-9079-d46873063807.png">
