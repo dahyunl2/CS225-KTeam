@@ -8,25 +8,6 @@ using namespace std;
 class PageRank
 {
   public:
-    //adjust adj matrix
-
-    void make_adj(int num, double damping);
-
-    //perform pagerank
-    vector<double> rank(vector<double> initial, int time, bool normalize);
-
-    //pick out the most important airport
-    vector<int> top_N_airport(int num);
-
-    //generate starting vector for pagerank
-    vector<double> initial_vector();
-
-    //print adjmatrix
-    void print_adj();
-
-    //print the result vector
-    void print_result();
-
     //the adj matrix variable for pagerank
     vector<vector<double>> adj; 
 
@@ -37,5 +18,19 @@ class PageRank
     vector<double> pr_output; 
 
     //dimension of the adj matrix, namelist, initial vector and result vector
-    int num;
+    int dim;
+
+    //generate starting vector for pagerank
+    vector<double> initial_vector();
+
+    //adjust adj matrix
+    void make_adj(int dim, double damping);
+
+    //perform pagerank
+    vector<double> rank(vector<double> initial, int time, bool normalize);
+
+    //pick out the most important airport
+    vector<int> top_N_airport(int num);
+
+    
 };

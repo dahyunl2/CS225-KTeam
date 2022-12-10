@@ -257,9 +257,8 @@ void Graph::adjMatrix(PageRank *page_r)
     int size = airportMap.size();
     page_r->adj.resize(size, vector<double>(size));
     page_r->name_list.resize(size);
-    page_r->num = size;
+    page_r->dim = size;
 
-    // initialize adjacent matrix
     for (int i = 0; i < size; i++)
     {
         for (int j = 0; j < size; j++)
@@ -268,7 +267,6 @@ void Graph::adjMatrix(PageRank *page_r)
         }
     }
 
-    // populate the name of pagerank obj
     int x = 0;
     for (auto it = airportMap.begin(); it != airportMap.end(); ++it)
     {
@@ -280,8 +278,6 @@ void Graph::adjMatrix(PageRank *page_r)
         x++;
     }
 
-    /*check every flight of every airport
-    put the weight into the adj matrix according to the order of the namelist*/
     x = 0;
     for (auto it = airportMap.begin(); it != airportMap.end(); ++it)
     {

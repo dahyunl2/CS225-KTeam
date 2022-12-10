@@ -59,54 +59,33 @@ TEST_CASE("Testing Airport constructor 2") {
 }
 
 TEST_CASE("Testing Graph constructor") {
-    string aData = "/workspaces/cs225/225_project/CS225-KTeam/data/airports.dat";
-    string rData = "/workspaces/cs225/225_project/CS225-KTeam/data/routes.dat";
-    ///test
-    Graph aGraph = Graph(aData, rData);
-    unordered_map<int, Airport> aMap = aGraph.getVertices();
+    string apData = "/workspaces/cs225/225_project/CS225-KTeam/data/airports.dat";
+    string routeData = "/workspaces/cs225/225_project/CS225-KTeam/data/routes.dat";
+    
+    // Initialize Graph class with full airports and routes data
+    Graph graph = Graph(apData, routeData);
+    unordered_map<int, Airport> airportMap = graph.getVertices();
 
-    // Airport ID of Incheon International Airport and Yangyang International Airport
+    // Pick 1 airports (Incheon International Airport)
+    
     int ICN = 3930;
-    int YY = 6006;
+    
+    // Check airportMap (Adjacent Matrix : V - Airports, E - Flight)
+    for (auto iter = airportMap.begin(); iter != airportMap.end(); ++iter) {
+        if (iter->first == ICN) {
+            int id = iter->first;
+            auto dest_APs = iter->second.destAPs;
 
-    cout << "Adjacent airports and the corresponding flights of international airports in Korea" << endl;
-    for (auto it = aMap.begin(); it != aMap.end(); ++it) {
-        if (it->first == ICN || it->first == YY) {
-            
-            int id = it->first;
-            cout << "Flight departing from " << it->second.getAPID() << ", ";
-            cout << it->second.getAPName() << ", ";
-            cout << it->second.getAPCity() << endl;
-
-            unordered_map<int, Flight> dest_APs = it->second.destAPs;
-            
-            cout << "dest AP size: " << dest_APs.size() << endl;
-            for (auto it = dest_APs.begin(); it != dest_APs.end(); ++it) {
-                REQUIRE(it->second.getfromWhereId() == id);
-                cout << "Flight departing from " << it->second.getfromWhereId() << endl;
-                cout << "Flight arriving at " << it->second.gettoWhereId() << endl;
-                cout << "Flight distance: " << it->second.getDistance() << endl;
+            for (auto iter = dest_APs.begin(); iter != dest_APs.end(); ++iter) {
+                REQUIRE(iter->second.getfromWhereId() == id);
             }
         }
     }
 }
 
-// TEST_CASE("Page Rank Test") { 
-//     string aData = "/workspaces/cs225/225_project/CS225-KTeam/data/airports.dat";
-//     string rData = "/workspaces/cs225/225_project/CS225-KTeam/data/routes.dat";
 
-//     Graph aGraph = Graph(aData, rData);
-//     PageRank pr = PageRank();
-
-//     aGraph.adjMatrix(&pr);
-//     pr.print_result();
-
-//     REQUIRE(144 == 155);
-// }
-
-TEST_CASE("Testing Pagerank function top_airport()") { 
-    cout << "\n\n\n\n >>>>>>>>Testing Pagerank function top_airport()\n" << endl;
-    //construct a pagerank obj, manually setup the name_list and pr_result
+TEST_CASE("Testing Pagerank function top_N_airport()") { 
+    cout << "Testing Pagerank function top_airport() - top 3 airports" << endl;
     PageRank *test = new PageRank(); 
     test->name_list.resize(5);
     test->pr_output.resize(5);
@@ -117,53 +96,33 @@ TEST_CASE("Testing Pagerank function top_airport()") {
     test->name_list[3] = 3;
     test->name_list[4] = 4;
 
-    test->pr_output[0] = 0.245;
-    test->pr_output[1] = 324.15;
-    test->pr_output[2] = 23.21;
-    test->pr_output[3] = 56.33;
-    test->pr_output[4] = 4;
+    test->pr_output[0] = 0.435;
+    test->pr_output[1] = 323.15;
+    test->pr_output[2] = 24.21;
+    test->pr_output[3] = 57.33;
+    test->pr_output[4] = 3.5;
 
-    //pick out the top 3 airport's id
-    vector<int> rank = test->top_N_airport(3); 
-    REQUIRE(1 == rank[0]);
-    REQUIRE(3 == rank[1]);
-    REQUIRE(2 == rank[2]);
+    //pick top 3 airport's id
+    vector<int> top_3 = test->top_N_airport(3); 
+    REQUIRE(1 == top_3[0]);
+    REQUIRE(3 == top_3[1]);
+    REQUIRE(2 == top_3[2]);
 }
 
-TEST_CASE("Testing Pagerank implementation on a subset of the whole data set") { 
-    //adjust the precision of the weight of edge to be shown
-    //cout << setprecision(10);
-    cout << "\n\n\n\n >>>>>>>>Testing constructing graph from a subset of data and pagerank on the data set\n" << endl;
+TEST_CASE("Testing constructing graph from a subset of data and execute pagerank algorithm on the test data set") { 
     string airportFile = "/workspaces/cs225/225_project/CS225-KTeam/tests/airports_test_pr.dat";
     string routesFile = "/workspaces/cs225/225_project/CS225-KTeam/tests/route_test_pr.dat";
+
+
     Graph airportGraph(airportFile, routesFile);
     auto airportMap = airportGraph.getVertices();
 
-    //printing out all flights departing from O'Hare, Newark and Beijing airport
-    // for(auto it = airportMap.begin(); it != airportMap.end(); ++it){
-    //     cout << "Airport ID: " << it->first <<endl;
-    //     if(it->first == 3830 || it->first == 3494 || it->first == 3364){
-    //         cout << "Airport ID: " <<it->second.getAPID() << " ";
-    //         cout << "Airport Name: " <<it->second.getAPName() << endl;
-
-    //         unordered_map<int, Flight> adjList = it->second.destAPs;
-    //         for(auto it = adjList.begin(); it != adjList.end(); ++it){
-    //             cout << "Source ID: " << it->second.getfromWhereId() << " ";
-    //             cout << "Destination ID: " << it->second.gettoWhereId() << " ";
-    //             cout << "Flight weight: " << it->second.getDistance() << endl;
-    //         }
-    //     }
-    // }
-    //cout << "\n";
-
     PageRank *page = new PageRank();
     airportGraph.adjMatrix(page);
-    page->make_adj(page->num, 0.85);
-    page->print_adj();
+    page->make_adj(page->dim, 0.85);
     vector<double> initial = page->initial_vector();
-    vector<double> re = page->rank(initial, 100, true);
-    page->print_result();
-    vector<int> id_rank = page->top_N_airport(3);
+    page->rank(initial, 150, true);
+    vector<int> id_rank = page->top_N_airport(2);
 
     REQUIRE(3364 == id_rank[0]);
     REQUIRE(3728 == id_rank[1]);
