@@ -1,11 +1,11 @@
 # Flight.cpp
 In the Flight.cpp file, we created a Flight class whose object will have the ids of the departure and destination airports and the distance between those airports, and this distance member will be used to calculate the weight of the node later in the graph function. We also have getters, setters, and the overloaded equality operator to check if two edges are the same and the comparison operator to compare the distance between edges.
+<img width="800" alt="Screen Shot 2022-12-10 at 11 38 16 PM" src="https://user-images.githubusercontent.com/90300666/206888261-61e0eef7-6797-48b0-aec1-26baf1eda8a8.png">
 
 
 # Airport.cpp
 In the Airport.cpp file, we’ve been working on parsing the airport dataset so that we can create an Airport object which will be a vertex of a graph. The airport object will have its id, name, city, country, latitude, and longitude as its private members, so we made a constructor with each line of the dataset as its parameter, stored each data in a vector, and assigned corresponding data to members. We had several helper functions that could slice each line with a given separator and trim whitespaces on the left and right sides of the string. We also made getter functions for each member. 
 We had two test cases to check if Airport constructors were working correctly, each with the vector of string and string as a parameter. We confirmed that constructors were creating a desired output, so we moved on to creating a graph for the dataset.
-<img width="800" alt="Screen Shot 2022-12-10 at 11 38 16 PM" src="https://user-images.githubusercontent.com/90300666/206888261-61e0eef7-6797-48b0-aec1-26baf1eda8a8.png">
 
 # graph.cpp
 The key function of the graph.cpp file is to parse given airports and routes data to populate airportMap (adjacency matrix). Airport Map has a key of each airport’s ID and value of Airport Class that is implemented in a separate file. This class also populates a map (destAps) that stores flight information of each airport. These destAps function as weighted edges in our graph. In order to weight the edges, we implemented calcWeight that receives two airport ids and calculates the weight between the two airports by comparing their latitude and longitude. 
