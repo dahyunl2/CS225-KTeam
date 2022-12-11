@@ -25,18 +25,30 @@ We have 2 test cases for Page rank algorithms. For the first case, have manually
 
 # Test.cpp
 We made 5 types of test cases to confirm our code is working properly. All of them have passed properly:
+
 1)Testing Airport Constructor: vector<string> input
+ 
 2)Testing Airport Constructor: string input
+ 
 3)Testing Graph constructor
+ 
 4)Testing Pagerank function top_airport()
+ 
 5)Testing Pagerank implementation on a subset of the whole data set
  
 # Answer to the leading questions
 Leading Questions:
+ 
 1)Find the routes to destination with minimum transits.
+ 
 2)Find the best route among routes with the same transits.
+ 
 3)Find the best airport with layovers.
+ 
 Our goals were to determine the shortest flight time and distance using the “OpenFlights” dataset, and we successfully accomplished this using BFS and Dijkstra’s Algorithms. 
+ 
 We answered the question 1 by using BFS algorithm and we succesfully return the shortest path in terms of minimum transit. 
+ 
 We answered the second question by using Dijkstra and we successfully return the shortest distance of the possible path. 
+ 
 We answered the third question by using PageRank so that we found the most important airport (which has greatest number of layovers at that airport)
