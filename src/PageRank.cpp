@@ -6,77 +6,87 @@
 
 
 /**
+*	generates the starting random vector
+*   @return the starting vector for pagerank
+*/
+vector<double> PageRank::initial_vector(){
+    vector<double> initial;
+    initial.resize(this->dim);
+    for(int i = 0; i < this->dim; i++){
+        initial[i] = rand();
+    }
+    return initial;
+}
+
+/**
 *	modify adjmatrix according to damping factor, set num of the pagerank obj
-*	@param num dimention of matrix to be set and stored
+*	@param dim dimention of matrix to be set and stored
 *   @param damping damping factor
 */
-void PageRank::make_adj(int num, double damping) {
-    this->num = num;//store num
-    //resize adj matrix
-    //adj.resize(num,vector<double>(num));
+void PageRank::make_adj(int dim, double damping) {
+    this->dim = dim;//assign dim
+    //use damping to acquire extra factor
+    double d_factor = (1-damping)/dim;
 
-    //use damping factor to generate the require extra factor
-    double d_factor = (1-damping)/num;
-
-    //adjust adj matrix according to pagerank alg
-    for(int i = 0; i < num; i++){
+    //fixing adj property for pagerank alg
+    for(int i = 0; i < dim; i++){
         double sum = 0;
-        for(int j = 0; j < num; j++){
+        for(int j = 0; j < dim; j++){
             sum += adj[j][i];
-        }     
+        }
         if(sum == 0){
-            //double z = 1/this->num;
-            for(int j = 0; j < num; j++){
-                adj[j][i] = 1/(double)num;
+            for(int j = 0; j < dim; j++){
+                adj[j][i] = 1/(double)dim;
             }              
         } else {
-            for(int j = 0; j < num; j++){
+            for(int j = 0; j < dim; j++){
                 adj[j][i] = (adj[j][i]/sum)*damping+d_factor;
             }             
         }
     }
 }
 
-
 /**
 *	execute pagerank algorithm 
 *	@param initial starting vector
-*   @param time time of iteration
-*   @param normalize whether to perform normalization or not
+*   @param num_iter num_iter of iteration
+*   @param is_normal whether to perform normalization or not
 *   @return the result vector
 */
-vector<double> PageRank::rank(vector<double> initial, int time, bool normalize) {
+vector<double> PageRank::rank(vector<double> initial, int num_iter, bool is_normal) {
     //vectors which stores the intermediate result
     vector<double> tmp = initial;
     vector<double> tmp2 = initial;
-    for(int t = 0; t < time; t++){
-        for(int i = 0; i < num; i++){
-            //initialize the vector
+    for(int t = 0; t < num_iter; t++){
+        for(int i = 0; i < dim; i++){
+            //vector initialize
             tmp2[i] = 0;
             //calculate product of adjmatrix and vector 
-            for(int j = 0; j < num; j++){
+            for(int j = 0; j < dim; j++){
                 tmp2[i] += adj[i][j] * tmp[j];
-
-                if(normalize) {
+                if(is_normal) {
                     double sum = 0;
                     //perform norm 2 normalize
-                    for(std::vector<double>::iterator it = tmp2.begin(); it != tmp2.end(); ++it)
-                        sum += (*it)*(*it);
-                    double normalize = sqrt(sum);
+                    for(auto iter = tmp2.begin(); iter != tmp2.end(); ++iter)
+                        sum += (*iter)*(*iter);
+                    double is_normal = sqrt(sum);
 
-                    for(int n = 0; n < num; n++){
-                        tmp2[n] = tmp2[n] / normalize;
+                    for(int n = 0; n < dim; n++){
+                        tmp2[n] = tmp2[n] / is_normal;
                     }
                 }
-
             }     
         }
         tmp = tmp2;
-    
 }
     pr_output = tmp;
     return tmp;
 }
+
+
+
+
+
 
 
 
@@ -96,18 +106,18 @@ vector<int> PageRank::top_N_airport(int num){
     //figure out the index of the important airport in the pagerank result vector
     for(int i = 0; i < num; i++){
         double max = 0;
-        for(auto it = pr_output.begin(); it != pr_output.end(); ++it){
-            if(*it > max){
-                bool flag = true;
+        for(auto iter = pr_output.begin(); iter != pr_output.end(); ++iter){
+            if(*iter > max){
+                bool insert = true;
                 //check if the current airport is already on the list of the important airport
                 for(auto temp = largest.begin(); temp != largest.end(); ++temp){
-                    if(*temp == *it) {
-                        flag = false;
+                    if(*temp == *iter) {
+                        insert = false;
                         break;
                     }
                 }
-                if(flag)
-                    max = *it;
+                if(insert)
+                    max = *iter;
             }
         }
         largest[position] = (max);
@@ -118,8 +128,8 @@ vector<int> PageRank::top_N_airport(int num){
     //using the index and the name_list to find out the relating airport id
     for(int i = 0; i < num; i++){
         int count = 0;
-        for(auto it = pr_output.begin(); it != pr_output.end(); ++it){
-            if(largest[i] == *it){
+        for(auto iter = pr_output.begin(); iter != pr_output.end(); ++iter){
+            if(largest[i] == *iter){
                 airport[position] = (name_list[count]);
                 position++;
             }
@@ -127,67 +137,9 @@ vector<int> PageRank::top_N_airport(int num){
         }
     }
 
-    //print the id
-    cout<<"top "; 
-    cout<<num; 
-    cout<<" important airport\n"; 
-    for(int i = 0; i < num; i++){
-        cout<<airport[i];
-        cout<<"\n";
-    }
     return airport;
 }
 
 
 
-/**
-*	generates the starting vector
-*   @return the starting vector for pagerank
-*/
-vector<double> PageRank::initial_vector(){
-    vector<double> initial;
-    initial.resize(this->num);
-    for(int i = 0; i < this->num; i++){
-        initial[i] = rand();
-    }
-    return initial;
-}
-
-/**
-*	print the adj matrix. column and row are labeled
-*/
-void PageRank::print_adj(){
-    cout<<"adj matrix"<<endl;
-    cout<<"      ";
-    for(int i = 0; i < this->num; i++){
-        cout<<this->name_list[i];
-        cout<<"           ";
-    }
-    cout<<"\n";
-    for(int i = 0; i < this->num; i++){
-        cout<<this->name_list[i];
-        cout<<"  ";
-        for(int j = 0; j < this->num; j++){
-            cout<<this->adj[i][j];
-            cout<<"  ";
-        } 
-        cout<<"\n";
-    }
-    cout<<"\n";
-}
-
-/* 
-*	effect: print the result vector. airport ids are also labeled
-*/
-void PageRank::print_result(){
-    cout<<"page rank result\n"; 
-    cout<<" ID      value\n"; 
-    for(int i = 0; i < this->num; i++){
-        cout<<this->name_list[i];
-        cout<<" ";
-        cout<<this->pr_output[i];
-        cout<<"\n";
-    }
-    cout<<"\n";
-}
 

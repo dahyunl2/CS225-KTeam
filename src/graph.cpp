@@ -226,8 +226,6 @@ void Graph::adjMatrix(PageRank *pr_obj){
     }
     
 
-    /*check every flight of every airport
-    put the weight into the adj matrix according to the order of the namelist*/
     x = 0;
     for(auto it = airportMap.begin(); it != airportMap.end(); ++it){
         if(x == size) break;

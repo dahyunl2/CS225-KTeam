@@ -18,6 +18,7 @@ using namespace std;
 
 TEST_CASE("Testing Airport constructor 1")
 {
+    //Testing Airport Constructor: vector<string> input
     unordered_map<string, Airport> vertices;
     cout<<"\n\n **Testing vector constructor with Southend airport**\n"<<endl;
     vector<string> airport_data = {"508","Southend Airport","Southend","United Kingdom", "", "", "51.5713996887207", "0.6955559849739075"};
@@ -28,7 +29,7 @@ TEST_CASE("Testing Airport constructor 1")
     string Country = vertices["Southend Airport"].getAPCountry();
     int Latitude = (int)vertices["Southend Airport"].getAPLat();
     int Longitude = (int)vertices["Southend Airport"].getAPLong();
-
+    //Compare the results with the expected results.
     REQUIRE(508 == ID);
     REQUIRE("Southend Airport" == Name);
     REQUIRE("Southend" == City);
@@ -51,7 +52,7 @@ TEST_CASE("Testing Airport constructor 2") {
     string Country = (vertices["Mount Hagen Kagamuga Airport"].getAPCountry());
     int Latitude = (int)vertices["Mount Hagen Kagamuga Airport"].getAPLat();
     int Longitude = (int)vertices["Mount Hagen Kagamuga Airport"].getAPLong();
-    
+    //Compare the results with the expected results
     REQUIRE(1 == ID);
     REQUIRE("Mount Hagen Kagamuga Airport" == Name);
     REQUIRE("Mount Hagen" == City);
@@ -71,29 +72,37 @@ TEST_CASE("Testing Graph constructor") {
     Graph aGraph = Graph(aData, rData);
     unordered_map<int, Airport> aMap = aGraph.getVertices();
 
-    // Airport ID of Incheon International Airport and Yangyang International Airport
+    // Pick 1 airports (Incheon International Airport)
+    
     int ICN = 3930;
-    int YY = 6006;
+    
+    // Check airportMap (Adjacent Matrix : V - Airports, E - Flight)
+    for (auto iter = airportMap.begin(); iter != airportMap.end(); ++iter) {
+        if (iter->first == ICN) {
+            int id = iter->first;
+            auto dest_APs = iter->second.destAPs;
 
-    cout << "\n\n **Testing all the adjacent airports and the corresponding flights of international airports in Korea**\n" << endl;
-    // Expected: All the adjacent airports and the corresponding flights of international airports in Korea
+            cout << "\n\n **Testing all the adjacent airports and the corresponding flights of international airports in Korea**\n" << endl;
+            // Expected: All the adjacent airports and the corresponding flights of international airports in Korea
 
-    for (auto it = aMap.begin(); it != aMap.end(); ++it) {
-        if (it->first == ICN || it->first == YY) {
-            
-            int id = it->first;
-            cout << "Flight departing from " << it->second.getAPID() << ", ";
-            cout << it->second.getAPName() << ", ";
-            cout << it->second.getAPCity() << endl;
+            for (auto it = aMap.begin(); it != aMap.end(); ++it) {
+                if (it->first == ICN || it->first == YY) {
+                    
+                    int id = it->first;
+                    cout << "Flight departing from " << it->second.getAPID() << ", ";
+                    cout << it->second.getAPName() << ", ";
+                    cout << it->second.getAPCity() << endl;
 
-            unordered_map<int, Flight> dest_APs = it->second.destAPs;
-            
-            cout << "dest AP size: " << dest_APs.size() << endl;
-            for (auto it = dest_APs.begin(); it != dest_APs.end(); ++it) {
-                REQUIRE(it->second.getfromWhereId() == id);
-                cout << "Flight departing from " << it->second.getfromWhereId() << endl;
-                cout << "Flight arriving at " << it->second.gettoWhereId() << endl;
-                cout << "Flight distance: " << it->second.getDistance() << endl;
+                    unordered_map<int, Flight> dest_APs = it->second.destAPs;
+                    
+                    cout << "dest AP size: " << dest_APs.size() << endl;
+                    for (auto it = dest_APs.begin(); it != dest_APs.end(); ++it) {
+                        REQUIRE(it->second.getfromWhereId() == id);
+                        cout << "Flight departing from " << it->second.getfromWhereId() << endl;
+                        cout << "Flight arriving at " << it->second.gettoWhereId() << endl;
+                        cout << "Flight distance: " << it->second.getDistance() << endl;
+                    }
+                }
             }
         }
     }
@@ -171,17 +180,17 @@ TEST_CASE("Testing Pagerank function top_airport()") {
     test->name_list[3] = 3;
     test->name_list[4] = 4;
 
-    test->pr_output[0] = 0.245;
-    test->pr_output[1] = 324.15;
-    test->pr_output[2] = 23.21;
-    test->pr_output[3] = 56.33;
-    test->pr_output[4] = 4;
+    test->pr_output[0] = 0.435;
+    test->pr_output[1] = 323.15;
+    test->pr_output[2] = 24.21;
+    test->pr_output[3] = 57.33;
+    test->pr_output[4] = 3.5;
 
-    //pick out the top 3 airport's id
-    vector<int> rank = test->top_N_airport(3); 
-    REQUIRE(1 == rank[0]);
-    REQUIRE(3 == rank[1]);
-    REQUIRE(2 == rank[2]);
+    //pick top 3 airport's id
+    vector<int> top_3 = test->top_N_airport(3); 
+    REQUIRE(1 == top_3[0]);
+    REQUIRE(3 == top_3[1]);
+    REQUIRE(2 == top_3[2]);
 }
 
 TEST_CASE("Testing Pagerank implementation on a subset of the whole data set") { 
@@ -190,17 +199,17 @@ TEST_CASE("Testing Pagerank implementation on a subset of the whole data set") {
     cout << "\n\n **Testing constructing graph from a subset of data and pagerank on the data set**\n" << endl;
     string airportFile = "/workspaces/cs225/225_project/CS225-KTeam/tests/airports_test_pr.dat";
     string routesFile = "/workspaces/cs225/225_project/CS225-KTeam/tests/route_test_pr.dat";
+
+
     Graph airportGraph(airportFile, routesFile);
     auto airportMap = airportGraph.getVertices();
 
     PageRank *page = new PageRank();
     airportGraph.adjMatrix(page);
-    page->make_adj(page->num, 0.85);
-    page->print_adj();
+    page->make_adj(page->dim, 0.9);
     vector<double> initial = page->initial_vector();
-    vector<double> re = page->rank(initial, 100, true);
-    page->print_result();
-    vector<int> id_rank = page->top_N_airport(3);
+    page->rank(initial, 150, true);
+    vector<int> id_rank = page->top_N_airport(2);
 
     REQUIRE(3364 == id_rank[0]);
     REQUIRE(3728 == id_rank[1]);
