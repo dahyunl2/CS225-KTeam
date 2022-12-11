@@ -65,23 +65,6 @@ Airport::Airport(string& line) {
         ap_lat = stod(ap_vec[6], nullptr);
         ap_long = stod(ap_vec[7], nullptr);
     }
-        
-    // try {
-    //     ap_lat = stod(ap_vec[6], nullptr);
-    // }
-    // catch(const std::exception& e) {
-    //     cout << ap_vec[6] << endl;
-    //     cout << e.what() << endl;
-    // };
-    
-    // try {ap_long = stod(ap_vec[7], nullptr);}
-    // catch(const std::exception& e) {
-    //     cout << ap_vec[7] << endl;
-    //     cout << e.what() << endl;
-    //     // break;
-    // }
-//     }
-    // } 
 }
 
 

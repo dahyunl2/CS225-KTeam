@@ -32,7 +32,6 @@ class Graph {
 
         //functions that return private maps for debugging
         unordered_map<int, Airport> getVertices();
-        unordered_map<int, Flight> adjVertWithWeight(int airportID);
         std::vector<std::string> splice_ (string & line);
         std::string getAirportName(int id);
 

@@ -99,7 +99,7 @@ void Djikstras::findPaths(unordered_map<int, Airport> Map,string AirportFrom,str
     }
 }
 
-//finding all of the neighbors (adjacent) airpots of root airport
+//finding all of the neighbors (adjacent) airports of root airport
 //input: root; the name of a airport that we want to know the neighbors
 //return: vector of pairs<neighboring airport, the distance from this airport to the root>
 vector<pair<int, double>> Djikstras::getNeighbor(string root){

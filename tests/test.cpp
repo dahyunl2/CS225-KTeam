@@ -6,6 +6,7 @@
 #include "/workspaces/cs225/225_project/CS225-KTeam/src/airport.h"
 #include "/workspaces/cs225/225_project/CS225-KTeam/src/graph.h"
 #include "/workspaces/cs225/225_project/CS225-KTeam/src/BFS.h"
+#include "/workspaces/cs225/225_project/CS225-KTeam/src/djikstras.h"
 #include "/workspaces/cs225/225_project/CS225-KTeam/src/PageRank.h"
 
 using std::string;
@@ -18,7 +19,7 @@ using namespace std;
 TEST_CASE("Testing Airport constructor 1")
 {
     unordered_map<string, Airport> vertices;
-    cout<<"Testing vector constructor with Southend airport"<<endl;
+    cout<<"\n\n **Testing vector constructor with Southend airport**\n"<<endl;
     vector<string> airport_data = {"508","Southend Airport","Southend","United Kingdom", "", "", "51.5713996887207", "0.6955559849739075"};
     vertices["Southend Airport"] = Airport(airport_data);
     int ID = vertices["Southend Airport"].getAPID();
@@ -34,12 +35,13 @@ TEST_CASE("Testing Airport constructor 1")
     REQUIRE("United Kingdom" == Country);
     REQUIRE(51 == Latitude);
     REQUIRE(0 == Longitude);
-}
+    cout << ID << ", " << Name << ", " << City << ", " << Country << ", " << Latitude << ", " << Longitude << endl;
 
+}
 
 TEST_CASE("Testing Airport constructor 2") { 
 
-    cout<<"Testing string constructor with Mount Hagen Kagamuga Airport"<<endl;
+    cout<<"\n\n **Testing string constructor with Mount Hagen Kagamuga Airport**\n"<<endl;
     unordered_map<string, Airport> vertices;
     string mount_hagen = "1,\"Mount Hagen Kagamuga Airport\",\"Mount Hagen\",\"Papua New Guinea\",\"HGU\",\"AYMH\",-5.826789855957031,144.29600524902344,5388,10,\"U\",\"Pacific/Port_Moresby\",\"airport\",\"OurAirports\"";
     vertices["Mount Hagen Kagamuga Airport"] = Airport(mount_hagen);
@@ -56,12 +58,16 @@ TEST_CASE("Testing Airport constructor 2") {
     REQUIRE("Papua New Guinea" == Country);
     REQUIRE(-5 == Latitude);
     REQUIRE(144 == Longitude);
+    
+    cout << ID << ", " << Name << ", " << City << ", " << Country << ", " << Latitude << ", " << Longitude << endl;
+
+
 }
 
 TEST_CASE("Testing Graph constructor") {
     string aData = "/workspaces/cs225/225_project/CS225-KTeam/data/airports.dat";
     string rData = "/workspaces/cs225/225_project/CS225-KTeam/data/routes.dat";
-    ///test
+
     Graph aGraph = Graph(aData, rData);
     unordered_map<int, Airport> aMap = aGraph.getVertices();
 
@@ -69,7 +75,9 @@ TEST_CASE("Testing Graph constructor") {
     int ICN = 3930;
     int YY = 6006;
 
-    cout << "Adjacent airports and the corresponding flights of international airports in Korea" << endl;
+    cout << "\n\n **Testing all the adjacent airports and the corresponding flights of international airports in Korea**\n" << endl;
+    // Expected: All the adjacent airports and the corresponding flights of international airports in Korea
+
     for (auto it = aMap.begin(); it != aMap.end(); ++it) {
         if (it->first == ICN || it->first == YY) {
             
@@ -91,21 +99,67 @@ TEST_CASE("Testing Graph constructor") {
     }
 }
 
-// TEST_CASE("Page Rank Test") { 
-//     string aData = "/workspaces/cs225/225_project/CS225-KTeam/data/airports.dat";
-//     string rData = "/workspaces/cs225/225_project/CS225-KTeam/data/routes.dat";
+TEST_CASE("Testing the traversed airports in BFS") {
 
-//     Graph aGraph = Graph(aData, rData);
-//     PageRank pr = PageRank();
+    string aData = "/workspaces/cs225/225_project/CS225-KTeam/data/airports.dat";
+    string rData = "/workspaces/cs225/225_project/CS225-KTeam/data/routes.dat";
 
-//     aGraph.adjMatrix(&pr);
-//     pr.print_result();
+    BFS bfs(aData, rData);
+    
+    cout << "\n\n **Testing all BFS traversals starting from John F Kennedy International Airport**\n" << endl;
+    // Expected: all BFS traversals starting from John F Kennedy International Airport
 
-//     REQUIRE(144 == 155);
-// }
+    int JFK = 3797;
+    vector<string> all_traversals = bfs.BFS_move(JFK, 30);
+    for(unsigned i = 0; i < all_traversals.size(); i++){
+        cout << all_traversals[i] ;
+        if (i == all_traversals.size()-1) {
+            cout << "  END" << endl;
+        } else {
+            cout << " ==> ";
+        }
+        if(i % 5 == 0 && i != 0)
+            cout << endl;
+    }
+}
+
+
+TEST_CASE ("Testing Djikstra's algorithm to find the shortest path") { 
+
+    cout << "\n\n **Testing the shortest path between Charles de Gaulle International Airport to Vancouver International Airport using Djikstra's algorithm**\n" << endl;
+    
+    string aData = "/workspaces/cs225/225_project/CS225-KTeam/data/airports.dat";
+    string rData = "/workspaces/cs225/225_project/CS225-KTeam/data/routes.dat";
+
+    string start;
+    string destination;
+
+    Graph aGraph(aData, rData);
+    Djikstras shortestPath = Djikstras(aGraph, "Charles de Gaulle International Airport", "Vancouver International Airport");
+    
+    double d = shortestPath.getMinDist();
+    vector<string> path = shortestPath.getVertices();
+
+    // Expected: Find the shortest path between University of Illinis Willard Airport to Incheon International Airport using Djikstra's algorithm
+
+    cout << "path size: "<< path.size() << endl;
+    cout <<"Visited Airport \n"<<endl;
+
+    for (unsigned i = 0; i < path.size(); i++) {
+        cout << path[i] ;
+        if (i == path.size() - 1) {
+            cout << "  END" << endl;
+        }
+        if (i != path.size() - 1) 
+            cout << "==>" << endl;
+
+        if (i % 5 == 0 && i != 0)
+            cout << endl;
+    }
+}
 
 TEST_CASE("Testing Pagerank function top_airport()") { 
-    cout << "\n\n\n\n >>>>>>>>Testing Pagerank function top_airport()\n" << endl;
+    cout << "\n\n **Testing Pagerank function top_airport()**\n" << endl;
     //construct a pagerank obj, manually setup the name_list and pr_result
     PageRank *test = new PageRank(); 
     test->name_list.resize(5);
@@ -133,28 +187,11 @@ TEST_CASE("Testing Pagerank function top_airport()") {
 TEST_CASE("Testing Pagerank implementation on a subset of the whole data set") { 
     //adjust the precision of the weight of edge to be shown
     //cout << setprecision(10);
-    cout << "\n\n\n\n >>>>>>>>Testing constructing graph from a subset of data and pagerank on the data set\n" << endl;
+    cout << "\n\n **Testing constructing graph from a subset of data and pagerank on the data set**\n" << endl;
     string airportFile = "/workspaces/cs225/225_project/CS225-KTeam/tests/airports_test_pr.dat";
     string routesFile = "/workspaces/cs225/225_project/CS225-KTeam/tests/route_test_pr.dat";
     Graph airportGraph(airportFile, routesFile);
     auto airportMap = airportGraph.getVertices();
-
-    //printing out all flights departing from O'Hare, Newark and Beijing airport
-    // for(auto it = airportMap.begin(); it != airportMap.end(); ++it){
-    //     cout << "Airport ID: " << it->first <<endl;
-    //     if(it->first == 3830 || it->first == 3494 || it->first == 3364){
-    //         cout << "Airport ID: " <<it->second.getAPID() << " ";
-    //         cout << "Airport Name: " <<it->second.getAPName() << endl;
-
-    //         unordered_map<int, Flight> adjList = it->second.destAPs;
-    //         for(auto it = adjList.begin(); it != adjList.end(); ++it){
-    //             cout << "Source ID: " << it->second.getfromWhereId() << " ";
-    //             cout << "Destination ID: " << it->second.gettoWhereId() << " ";
-    //             cout << "Flight weight: " << it->second.getDistance() << endl;
-    //         }
-    //     }
-    // }
-    //cout << "\n";
 
     PageRank *page = new PageRank();
     airportGraph.adjMatrix(page);
