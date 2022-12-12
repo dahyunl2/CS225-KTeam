@@ -19,7 +19,7 @@ data folder:
 This folder is for storing data we use for parsing. There are airports.dat (containing information of airports such as name and id) and routs.dat (containing the relationship between airports)
 
 documents folder: 
-This folder contains the documents and submissions. finalPresentation.pdf (presentation slides), finalPresentation.mov (presentation video), results.md (written report)
+This folder contains the documents and submissions. finalPresentation.md (youtube link to video and google slide lilnk to the slides), results.md (written report)
 
 entry folder: 
 This folder contains main.
