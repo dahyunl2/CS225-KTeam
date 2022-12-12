@@ -8,6 +8,8 @@ Chae Hoon Kim (chk2),
 
 setting directory : /workspaces/cs225/225_project/CS225-KTeam/build
 
+Presentation video link: https://youtu.be/u_9_AkWHw_s
+
 
 # Github Organization:
 In our Github, there are 7 folders; build, data, documents, entry, feedback, src, and tests.
